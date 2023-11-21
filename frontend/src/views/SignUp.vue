@@ -20,7 +20,7 @@
       <input type="password" v-model="password" class="input-field" />
 
       <div class="submit">
-        <button type="button" class="btn btn-primary" :style="btnStyle">
+        <button type="button" class="btn btn-success" :style="btnStyleGreen">
           Create account
         </button>
       </div>
@@ -33,11 +33,10 @@ export default {
   name: "SignUp",
   data() {
     return {
-      btnStyle: {
+      btnStyleGreen: {
         borderRadius: "20px",
         width: "300px",
         marginTop: "10px",
-        backgroundColor: "green",
         border: "none",
       },
     };
@@ -83,5 +82,6 @@ export default {
 
 .btn-dark {
   background-color: #d29433;
+  margin-top: 20px;
 }
 </style>

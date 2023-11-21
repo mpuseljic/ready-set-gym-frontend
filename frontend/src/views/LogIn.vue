@@ -12,13 +12,7 @@
       <h3 style="color: white">Password</h3>
       <input type="password" class="form-control input-field" />
       <div class="submit">
-        <button
-          type="button"
-          class="btn btn-success"
-          :class="{ disabled: loading }"
-          :style="btnstyleGreen"
-          @click="login"
-        >
+        <button type="button" class="btn btn-success" :style="btnstyleGreen">
           <span
             v-if="loading"
             class="spinner-border spinner-border-sm"
@@ -84,5 +78,6 @@ export default {
 
 .btn-dark {
   background-color: #d29433;
+  margin-top: 20px;
 }
 </style>
