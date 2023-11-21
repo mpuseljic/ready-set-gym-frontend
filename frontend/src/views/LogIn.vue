@@ -81,4 +81,8 @@ export default {
   align-items: center;
   margin-top: 30px;
 }
+
+.btn-dark {
+  background-color: #d29433;
+}
 </style>

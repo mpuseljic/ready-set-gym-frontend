@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="header" :style="{ 'padding-left': '15px' }">
-      <router-link to="/" class="btn btn-dark" style="width: 50px">
+      <router-link to="/" class="btn btn-dark" style="width: 100px">
         <span class="material-symbols-outlined"> arrow_back_ios </span>
       </router-link>
     </div>
