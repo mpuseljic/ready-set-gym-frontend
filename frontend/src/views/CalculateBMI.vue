@@ -1,64 +1,72 @@
 <template>
-  <div class="main" style="background-color: black; margin: 0">
-    <div class="header" style="padding-left: 15px">
-      <router-link to="/" class="btn btn-dark" style="width: 50px">
-        <span class="material-symbols-outlined"> arrow_back_ios </span>
-      </router-link>
-    </div>
-    <div class="gender">
-      <h1 class="naslov">BMI CALCULATOR</h1>
-      <button
-        @click="maleChoose"
-        :class="{ 'btn-primary': male, 'btn-secondary': !male }"
-        :style="maleBtnStyle"
-        size="lg"
-      >
-        <i class="bi bi-gender-male" style="font-size: 2rem"></i>
-      </button>
-      <button
-        @click="femaleChoose"
-        :class="{ 'btn-primary': female, 'btn-secondary': !female }"
-        :style="femaleBtnStyle"
-        size="lg"
-      >
-        <i class="bi bi-gender-female" style="font-size: 2rem"></i>
-      </button>
-    </div>
-    <div class="bmi">
-      <div class="input">
-        <input
-          class="form-control height"
-          v-model="height"
-          type="number"
-          placeholder="Height (cm)"
-        />
-        <input
-          class="form-control weight"
-          v-model="weight"
-          type="number"
-          placeholder="Weight (kg)"
-        />
-        <input
-          class="form-control age"
-          v-model="age"
-          type="number"
-          placeholder="Age"
-        />
+  <div>
+    <div class="main" style="background-color: black; margin: 0">
+      <div class="header" style="padding-left: 15px">
+        <router-link to="/" class="btn btn-dark" style="width: 50px">
+          <span class="material-symbols-outlined"> arrow_back_ios </span>
+        </router-link>
       </div>
+      <div class="gender">
+        <h1 class="naslov">BMI CALCULATOR</h1>
+        <button
+          @click="maleChoose"
+          :class="{ 'btn-primary': male, 'btn-secondary': !male }"
+          :style="maleBtnStyle"
+          size="lg"
+        >
+          <i class="bi bi-gender-male" style="font-size: 2rem"></i>
+        </button>
+        <button
+          @click="femaleChoose"
+          :class="{ 'btn-primary': female, 'btn-secondary': !female }"
+          :style="femaleBtnStyle"
+          size="lg"
+        >
+          <i class="bi bi-gender-female" style="font-size: 2rem"></i>
+        </button>
+      </div>
+      <div class="bmi">
+        <div class="input">
+          <input
+            class="form-control height"
+            v-model="height"
+            type="number"
+            placeholder="Height (cm)"
+          />
+          <input
+            class="form-control weight"
+            v-model="weight"
+            type="number"
+            placeholder="Weight (kg)"
+          />
+          <input
+            class="form-control age"
+            v-model="age"
+            type="number"
+            placeholder="Age"
+          />
+        </div>
 
-      <button class="btn btn-success" @click="calculateBMI">Calculate</button>
+        <button class="btn btn-success" @click="calculateBMI">Calculate</button>
 
-      <div v-if="bmi != null">
-        <h2 class="result">Your BMI: {{ bmi }}</h2>
-        <p class="message">{{ bmiMessage }}</p>
+        <div v-if="bmi != null">
+          <h2 class="result">Your BMI: {{ bmi }}</h2>
+          <p class="message">{{ bmiMessage }}</p>
+        </div>
       </div>
     </div>
+    <nav-bar class="navbar" />
   </div>
 </template>
 
 <script>
+import NavBar from "../components/NavBar.vue";
+
 export default {
   name: "CalculateBMI",
+  components: {
+    NavBar,
+  },
   data() {
     return {
       height: null,
@@ -186,5 +194,12 @@ export default {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: rgb(222, 174, 43);
+}
+
+.navbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
 </style>
