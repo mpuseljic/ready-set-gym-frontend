@@ -112,11 +112,11 @@ export default {
       if (this.bmi === null) {
         return "";
       } else if (this.bmi < 18.5) {
-        return "Pothranjeni ste.";
+        return "You are undernourished. Consult your doctor to increase body weight.";
       } else if (this.bmi > 24.9) {
-        return "Imate prekomjernu tjelesnu težinu.";
+        return "You have excess body weight. Consult a doctor to reduce it.";
       } else {
-        return "Imate normalnu tjelesnu težinu.";
+        return "You have a normal body weight. Eat healthily and engage in physical activity to maintain it.";
       }
     },
   },
@@ -137,6 +137,9 @@ export default {
 }
 
 .result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -176,5 +179,12 @@ export default {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: aliceblue;
+}
+
+.message {
+  margin-left: 21px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: rgb(222, 174, 43);
 }
 </style>
