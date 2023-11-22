@@ -84,6 +84,14 @@ export default {
     };
   },
   methods: {
+    calculateBMI() {
+      if (this.height && this.weight) {
+        const heightInMeters = this.height / 100;
+        this.bmi = (this.weight / (heightInMeters * heightInMeters)).toFixed(2);
+      } else {
+        this.bmi = null;
+      }
+    },
     maleChoose() {
       this.male = !this.male;
       this.female = false;
@@ -111,6 +119,12 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.result {
+  color: white;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .input {
