@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import SignUp from "../views/SignUp.vue";
 import LogIn from "../views/LogIn.vue";
 import FirstPage from "../views/FirstPage.vue";
+import CalculateBMI from "../views/CalculateBMI.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/",
     name: "firstpage",
     component: FirstPage,
+  },
+  {
+    path: "/bmi",
+    name: "bmi",
+    component: CalculateBMI,
   },
 ];
 
