@@ -50,6 +50,7 @@
 
       <div v-if="bmi != null">
         <h2 class="result">Your BMI: {{ bmi }}</h2>
+        <p class="message">{{ bmiMessage }}</p>
       </div>
     </div>
   </div>
@@ -103,6 +104,20 @@ export default {
       this.male = false;
       this.femaleBtnStyle.backgroundColor = this.female ? "pink" : "#D29433";
       this.maleBtnStyle.backgroundColor = "#D29433";
+    },
+  },
+
+  computed: {
+    bmiMessage() {
+      if (this.bmi === null) {
+        return "";
+      } else if (this.bmi < 18.5) {
+        return "Pothranjeni ste.";
+      } else if (this.bmi > 24.9) {
+        return "Imate prekomjernu tjelesnu težinu.";
+      } else {
+        return "Imate normalnu tjelesnu težinu.";
+      }
     },
   },
 };
