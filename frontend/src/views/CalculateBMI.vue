@@ -23,6 +23,12 @@
           type="number"
           placeholder="Weight (kg)"
         />
+        <input
+          class="form-control age"
+          v-model="age"
+          type="number"
+          placeholder="Age"
+        />
       </div>
 
       <button class="btn btn-success" @click="calculateBMI">Calculate</button>
@@ -41,6 +47,7 @@ export default {
     return {
       height: null,
       weight: null,
+      age: null,
       bmi: null,
       male: false,
       female: false,
@@ -49,4 +56,54 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.btn-cyan {
+  background-color: cyan;
+}
+
+.btn-pink {
+  background-color: pink;
+}
+
+.gender {
+  text-align: center;
+}
+
+.bmi {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.height,
+.weight,
+.age {
+  background-color: #d29433;
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  margin: 5px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: medium;
+}
+
+.btn {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  padding: 10px;
+  margin: 20px;
+}
+</style>
