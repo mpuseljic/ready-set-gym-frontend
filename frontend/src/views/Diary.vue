@@ -72,6 +72,7 @@ export default {
     return {
       value: "",
       diaryContent: "",
+      currentWeight: "",
     };
   },
   methods: {
@@ -84,6 +85,10 @@ export default {
       console.log("Diary Entry: ", this.diaryContent);
 
       this.clearForm();
+    },
+
+    recordWeight() {
+      console.log("Save weight: " + this.currentWeight);
     },
   },
   mounted() {
