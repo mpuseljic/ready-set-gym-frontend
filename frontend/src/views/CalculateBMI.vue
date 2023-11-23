@@ -28,18 +28,21 @@
       <div class="bmi">
         <div class="input">
           <input
+            style="background-color: #d29433"
             class="form-control height"
             v-model="height"
             type="number"
             placeholder="Height (cm)"
           />
           <input
+            style="background-color: #d29433"
             class="form-control weight"
             v-model="weight"
             type="number"
             placeholder="Weight (kg)"
           />
           <input
+            style="background-color: #d29433"
             class="form-control age"
             v-model="age"
             type="number"
