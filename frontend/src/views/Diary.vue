@@ -55,12 +55,17 @@
         </button>
       </div>
     </div>
-    <div>
-      <canvas ref="weightChart" style="max-width: 100%"></canvas>
+    <div class="weight-progress">
+      <h2 class="naslov" style="margin-top: 50px">Weight Progress</h2>
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import Chart from "chart.js/auto";
+
 export default {
   name: "DiaryEntry",
   data() {
@@ -80,6 +85,42 @@ export default {
 
       this.clearForm();
     },
+  },
+  mounted() {
+    const ctx = document.getElementById("myChart");
+
+    const monthLabels = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+    ];
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: monthLabels,
+        datasets: [
+          {
+            label: "Weight Progress",
+            data: [70, 65, 50, 75, 72, 63],
+            borderWidth: 5,
+            backgroundColor: "black",
+            borderColor: "#d29433",
+            tension: 0.2,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
   },
 };
 </script>
@@ -132,5 +173,14 @@ export default {
   height: 70px;
   border-radius: 100px;
   border: solid 10px #d29433;
+}
+
+#myChart {
+  color: black;
+  background-color: bisque;
+  width: 30%;
+  height: 50%;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 </style>
