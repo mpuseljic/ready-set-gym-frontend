@@ -45,6 +45,18 @@ export default {
       diaryContent: "",
     };
   },
+  methods: {
+    clearForm() {
+      this.value = "";
+      this.diaryContent = "";
+    },
+    saveEntry() {
+      console.log("Date: ", this.value);
+      console.log("Diary Entry: ", this.diaryContent);
+
+      this.clearForm();
+    },
+  },
 };
 </script>
 
@@ -52,7 +64,10 @@ export default {
 .naslov {
   text-align: center;
 }
-
+.btn {
+  border-radius: 10px;
+  width: 100px;
+}
 .form-label {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
