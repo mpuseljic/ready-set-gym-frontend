@@ -1,5 +1,5 @@
 <template>
-  <div class="main" :style="{ 'background-color': 'black' }">
+  <div class="main" :style="{ 'background-color': 'black', height: '200%' }">
     <div class="header" style="padding-left: 15px">
       <router-link to="/" class="btn btn-dark" style="width: 100px">
         <span class="material-symbols-outlined"> arrow_back_ios </span>
@@ -33,6 +33,30 @@
         <button @click="clearForm" class="btn btn-danger me-2">Clear</button>
         <button @click="saveEntry" class="btn btn-success">Save</button>
       </div>
+    </div>
+    <div class="weight-tracker">
+      <h2 class="naslov" style="margin-top: 50px">Weight Tracking</h2>
+      <div class="enter-weight">
+        <label for="weightInput" class="form-label" style="margin-top: 20px"
+          >Enter Weight (kg):</label
+        >
+        <input
+          id="weightInput"
+          type="number"
+          v-model="currentWeight"
+          class="form-control"
+        />
+        <button
+          @click="recordWeight"
+          class="btn btn-primary"
+          style="width: auto"
+        >
+          Record Weight
+        </button>
+      </div>
+    </div>
+    <div>
+      <canvas ref="weightChart" style="max-width: 100%"></canvas>
     </div>
   </div>
 </template>
@@ -77,6 +101,11 @@ export default {
 
 .form-control {
   background-color: bisque;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 }
 
 .align-items-center {
@@ -88,5 +117,20 @@ export default {
 .diary {
   margin-left: 50px;
   margin-right: 50px;
+}
+
+.enter-weight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+#weightInput {
+  width: 50%;
+  height: 70px;
+  border-radius: 100px;
+  border: solid 10px #d29433;
 }
 </style>
