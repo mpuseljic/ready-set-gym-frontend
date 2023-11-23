@@ -20,6 +20,20 @@
         />
       </div>
     </div>
+    <div class="diary">
+      <label for="diaryEntry" class="form-label">Diary Entry:</label>
+      <textarea
+        id="diaryEntry"
+        v-model="diaryContent"
+        class="form-control"
+        rows="4"
+        placeholder="Write your thoughts..."
+      ></textarea>
+      <div class="mb-3">
+        <button @click="clearForm" class="btn btn-danger me-2">Clear</button>
+        <button @click="saveEntry" class="btn btn-success">Save</button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -28,6 +42,7 @@ export default {
   data() {
     return {
       value: "",
+      diaryContent: "",
     };
   },
 };
@@ -53,5 +68,10 @@ export default {
   margin: auto;
   padding: 20px;
   margin-top: 25px;
+}
+
+.diary {
+  margin-left: 50px;
+  margin-right: 50px;
 }
 </style>
