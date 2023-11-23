@@ -8,9 +8,17 @@
     <h2 style="color: white; text-align: center">Log in to your account</h2>
     <div class="input-login">
       <h3 style="color: white">E-mail</h3>
-      <input type="email" class="form-control input-field" />
+      <input
+        type="email"
+        class="form-control input-field"
+        style="background-color: #d29433"
+      />
       <h3 style="color: white">Password</h3>
-      <input type="password" class="form-control input-field" />
+      <input
+        type="password"
+        class="form-control input-field"
+        style="background-color: #d29433"
+      />
       <div class="submit">
         <button type="button" class="btn btn-success" :style="btnstyleGreen">
           <span
@@ -24,10 +32,6 @@
         <button type="button" class="btn btn-secondary" :style="btnstyleGray">
           Cancel
         </button>
-      </div>
-      <div>
-        <span class="userError" v-if="userError">User not found!</span>
-        <span class="userError" v-if="passError">Invalid password!</span>
       </div>
     </div>
   </div>

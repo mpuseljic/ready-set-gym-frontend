@@ -34,6 +34,7 @@ export default {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         height: "100vh",
+        marginTop: "0",
       },
     };
   },
