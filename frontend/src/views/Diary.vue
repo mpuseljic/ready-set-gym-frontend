@@ -1,5 +1,11 @@
 <template>
-  <div class="main" :style="{ 'background-color': 'black', height: '200%' }">
+  <div
+    class="main"
+    :style="{
+      'background-color': 'black',
+      height: '200%',
+    }"
+  >
     <div class="header" style="padding-left: 15px">
       <router-link to="/" class="btn btn-dark" style="width: 100px">
         <span class="material-symbols-outlined"> arrow_back_ios </span>
@@ -61,13 +67,18 @@
         <canvas id="myChart"></canvas>
       </div>
     </div>
+    <nav-bar class="navbar" />
   </div>
 </template>
 <script>
 import Chart from "chart.js/auto";
+import NavBar from "../components/NavBar.vue";
 
 export default {
   name: "DiaryEntry",
+  components: {
+    NavBar,
+  },
   data() {
     return {
       value: "",
@@ -131,6 +142,9 @@ export default {
 </script>
 
 <style>
+.main {
+  padding-bottom: 100px;
+}
 .naslov {
   text-align: center;
 }
@@ -183,9 +197,16 @@ export default {
 #myChart {
   color: black;
   background-color: bisque;
-  width: 30%;
-  height: 50%;
   margin-left: 40px;
   margin-right: 40px;
+  z-index: 1;
+}
+
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
 }
 </style>
