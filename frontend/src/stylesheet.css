@@ -1,0 +1,19 @@
+.btn-dark {
+    background-color: black;
+    border: none;
+    margin: 20px 0 0 10px !important;
+    padding: 0 !important;
+}
+
+.btn-dark:hover {
+    background-color: black;
+}
+.btn-dark:focus {
+    border: none;
+}
+.btn-dark:active{
+    border: none;
+}
+.btn-dark::-moz-focus-inner {
+    border: 0;
+}
