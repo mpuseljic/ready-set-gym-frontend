@@ -1,11 +1,10 @@
 <template>
-  <div
-    class="main"
-    :style="{
-      'background-color': 'black',
-    }"
-  >
+  <div class="heading">
+    <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
+  </div>
+  <div class="main" style="background-color: black; margin: 0">
     <div class="header" style="padding-left: 15px"></div>
+
     <div class="header">
       <h1 style="color: #d29433">Let's crush it!</h1>
     </div>
@@ -112,14 +111,37 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+    <nav-bar class="navbar" />
   </div>
 </template>
 <script>
+import NavBar from "@/components/NavBar.vue";
+
 export default {
   name: "HomePage",
+  components: {
+    NavBar,
+  },
 };
 </script>
 <style>
+.heading {
+  margin: 0;
+  padding: 1vw 5vw 0 2vw;
+  height: 7vh;
+  background-color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heading-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  overflow: hidden;
+}
+
 .header {
   padding-top: 5px;
   padding-left: 20px;
