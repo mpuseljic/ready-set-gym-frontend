@@ -20,22 +20,6 @@
       </span>
       <h2>Luka Benković</h2>
     </div>
-
-    <div class="my-diaries">
-      <h2 class="my-diaries-text">My diaries</h2>
-    </div>
-
-    <div class="card-container">
-      <div class="card">
-        <div class="card-heading">
-          <h5 class="class-heading-text">TEST</h5>
-          <span class="material-symbols-outlined delete"> delete </span>
-        </div>
-        <div class="card-content">
-          <p class="card-text">Hello Mirna</p>
-        </div>
-      </div>
-    </div>
     <div class="my-workout">
       <h3 style="color: white">Choose what you want</h3>
     </div>
@@ -112,6 +96,21 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
+    </div>
+    <div class="my-diaries">
+      <h2 class="my-diaries-text">Read my diaries</h2>
+    </div>
+
+    <div class="card-container">
+      <div class="card">
+        <div class="card-heading">
+          <h5 class="class-heading-text">TEST</h5>
+          <span class="material-symbols-outlined delete"> delete </span>
+        </div>
+        <div class="card-content">
+          <p class="card-text">Hello Mirna</p>
+        </div>
+      </div>
     </div>
     <nav-bar class="navbar" />
   </div>
