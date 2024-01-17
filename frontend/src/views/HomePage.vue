@@ -211,6 +211,10 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+    <!--exercise list-->
+    <div class="exercise-list">
+      <h1 style="color: white">EXERCISE LIST</h1>
+    </div>
 
     <nav-bar class="navbar" />
   </div>
@@ -258,7 +262,8 @@ export default {
 }
 
 .recommended-workout,
-.my-workout {
+.my-workout,
+.exercise-list {
   margin: 50px;
 }
 .carousel-inner {
