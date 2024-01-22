@@ -19,26 +19,44 @@
     </div>
     <div class="row align-items-center">
       <div class="col-md-auto" style="width: 500px">
-        <label for="datePicker" class="form-label">Select a Date:</label>
+        <label
+          for="datePicker"
+          class="form-label"
+          style="margin-left: 10%; margin-right: 10%"
+          >Select a Date:</label
+        >
         <input
           id="datePicker"
           type="date"
           v-model="value"
           class="form-control"
-          style="max-width: 200px"
+          style="max-width: 200px; margin-left: 10%; margin-right: 10%"
         />
       </div>
     </div>
-    <div class="diary">
-      <label for="diaryEntry" class="form-label">Diary Entry:</label>
+    <div class="diary" style="margin-left: 10%; margin-right: 10%">
+      <label
+        for="diaryEntry"
+        class="form-label"
+        style="margin-left: 10%; margin-right: 10%"
+        >Diary Entry:</label
+      >
       <textarea
         id="diaryEntry"
         v-model="diaryContent"
         class="form-control"
         rows="4"
         placeholder="Write your thoughts..."
+        style="
+          display: block;
+          box-sizing: border-box;
+          height: 100px;
+          width: 1000px;
+          margin-left: 10%;
+          margin-right: 10%;
+        "
       ></textarea>
-      <div class="mb-3">
+      <div class="mb-3" style="margin-left: 10%; margin-right: 10%">
         <button @click="clearForm" class="btn btn-danger me-2">Clear</button>
         <button @click="saveEntry" class="btn btn-success">Save</button>
       </div>
@@ -65,9 +83,21 @@
       </div>
     </div>
     <div class="weight-progress">
-      <h2 class="naslov" style="margin-top: 50px">Weight Progress</h2>
+      <h2 class="naslov" style="margin-top: 70px">Weight Progress</h2>
       <div>
-        <canvas id="myChart"></canvas>
+        <canvas
+          id="myChart"
+          width="4000"
+          height="700"
+          style="
+            display: block;
+            box-sizing: border-box;
+            height: 700px;
+            width: 1000px;
+            margin-left: 10%;
+            margin-right: 10%;
+          "
+        ></canvas>
       </div>
     </div>
     <nav-bar class="navbar" />
@@ -201,8 +231,7 @@ export default {
 #myChart {
   color: black;
   background-color: bisque;
-  margin-left: 40px;
-  margin-right: 40px;
+
   z-index: 1;
 }
 
