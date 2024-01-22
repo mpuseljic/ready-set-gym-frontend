@@ -45,11 +45,17 @@
           data-bs-slide-to="2"
           aria-label="Slide 3"
         ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptionsProfile"
+          data-bs-slide-to="3"
+          aria-label="Slide 4"
+        ></button>
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img
-            src="../assets/crossfit.jpg"
+            src="../assets/profile-one.jpg"
             class="d-block"
             style="height: 60vh; width: auto"
           />
@@ -59,7 +65,7 @@
         </div>
         <div class="carousel-item">
           <img
-            src="../assets/lower-body.jpg"
+            src="../assets/profile-second.jpg"
             class="d-block"
             style="height: 60vh; width: auto"
           />
@@ -75,6 +81,16 @@
           />
           <div class="carousel-caption d-none d-md-block">
             <h3>FOOD</h3>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            src="../assets/bmi.jpg"
+            class="d-block"
+            style="height: 60vh; width: auto"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h3>CALCULATE BMI</h3>
           </div>
         </div>
       </div>

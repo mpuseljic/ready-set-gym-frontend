@@ -148,47 +148,32 @@
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img
-            src="../assets/crossfit.jpg"
+            src="../assets/my-workout-first.jpg"
             class="d-block"
             style="height: 60vh; width: auto"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h3>CrossFit</h3>
-            <p>
-              Whether you’ve trained your whole life or are just starting your
-              fitness journey, CrossFit offers a results-based, community-driven
-              approach that helps you build fitness and improve your health—over
-              your lifetime.
-            </p>
+            <h3>MY WORKOUT FIRST</h3>
           </div>
         </div>
         <div class="carousel-item">
           <img
-            src="../assets/lower-body.jpg"
+            src="../assets/my-workout-second.jpg"
             class="d-block"
             style="height: 60vh; width: auto"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h3>Lower Body Attack</h3>
-            <p>
-              Use these timeless leg exercises to gain mass and strength on your
-              lower body. A varied combination of reps and sets will help to
-              keep your routine fresh.
-            </p>
+            <h3>MY WORKOUT SECOND</h3>
           </div>
         </div>
         <div class="carousel-item">
           <img
-            src="../assets/upper-body.jpg"
+            src="../assets/my-workout-third.jpg"
             class="d-block"
             style="height: 60vh; width: auto"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h3>Upper Body Attack</h3>
-            <p>
-              Time to get the arms, shoulders and chest into it! You will need
-              some dumbbells to get this one done.
-            </p>
+            <h3>MY WORKOUT THIRD</h3>
           </div>
         </div>
       </div>
