@@ -1,7 +1,9 @@
 <template>
   <div class="heading">
     <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
-    <span class="material-symbols-outlined logout"> power_settings_new </span>
+    <router-link to="/login">
+      <span class="material-symbols-outlined logout"> power_settings_new </span>
+    </router-link>
   </div>
   <div
     class="main"
@@ -15,10 +17,12 @@
     </div>
 
     <div class="user-profile-img">
-      <span class="material-symbols-outlined profile-pic">
-        account_circle
+      <span
+        class="material-symbols-outlined profile-pic"
+        :style="{ backgroundImage: 'url(' + profilePicture + ')' }"
+      >
       </span>
-      <h2>Luka Benković</h2>
+      <h2 style="margin-top: 20px">Luka Benković</h2>
     </div>
     <div class="my-workout">
       <h3 style="color: white">Choose what you want</h3>
@@ -138,6 +142,11 @@ export default {
   components: {
     NavBar,
   },
+  data() {
+    return {
+      profilePicture: require("../assets/profile.jpg"),
+    };
+  },
 };
 </script>
 <style>
@@ -229,5 +238,14 @@ export default {
   left: 0;
   width: 100%;
   z-index: 2;
+}
+
+.profile-pic {
+  display: inline-block;
+  width: 200px; /* Adjust the size as needed */
+  height: 200px; /* Adjust the size as needed */
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%; /* Create a circular profile picture */
 }
 </style>
