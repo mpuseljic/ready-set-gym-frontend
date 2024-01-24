@@ -45,6 +45,9 @@
           Cancel
         </button>
       </div>
+      <div v-if="loginError" class="alert alert-danger" role="alert">
+        {{ loginError }}
+      </div>
     </div>
   </div>
 </template>
@@ -68,6 +71,7 @@ export default {
       email: "",
       password: "",
       loading: false,
+      loginError: null,
     };
   },
 
@@ -93,12 +97,13 @@ export default {
         this.$router.push("/home");
       } catch (error) {
         console.error("Login failed: ", error.response.data.error);
+        this.loginError = "Incorrect email or password. Please try again.";
       } finally {
         this.loading = false;
       }
     },
     cancelLogin() {
-      (this.email = ""), (this.password = "");
+      (this.email = ""), (this.password = ""), (this.loginError = null);
     },
   },
 };
