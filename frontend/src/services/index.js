@@ -1,8 +1,15 @@
 import axios from "axios";
 
-let Service = axios.create({
-  baseURL: "http://localhost:3000/",
-  timeout: 1000,
+const Service = axios.create({
+  baseURL: "http://localhost:3000",
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
 });
+
+axiosInstance
+  .get("/secure-route")
+  .then((response) => console.log(response.data))
+  .catch((error) => console.error("Request failed:", error.response.data));
 
 export { Service };
