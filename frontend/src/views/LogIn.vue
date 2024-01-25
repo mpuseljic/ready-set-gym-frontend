@@ -22,20 +22,22 @@
         style="background-color: #d29433"
       />
       <div class="submit">
-        <button
-          type="button"
-          class="btn btn-success"
-          :style="btnstyleGreen"
-          @click="loginUser"
-        >
-          <span
-            v-if="loading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <span v-else>Login</span>
-        </button>
+        <router-link to="/home">
+          <button
+            type="button"
+            class="btn btn-success"
+            :style="btnstyleGreen"
+            @click="loginUser"
+          >
+            <span
+              v-if="loading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span v-else>Login</span>
+          </button>
+        </router-link>
         <button
           type="button"
           class="btn btn-secondary"

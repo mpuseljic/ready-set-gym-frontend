@@ -20,14 +20,18 @@
       <input type="password" v-model="password" class="input-field" />
 
       <div class="submit">
-        <button
-          type="button"
-          class="btn btn-success"
-          :style="btnStyleGreen"
-          @click="registerUser"
-        >
-          Create account
-        </button>
+        <router-link to="/home">
+          <!--samo za prototip-->
+          <button
+            type="button"
+            class="btn btn-success"
+            :style="btnStyleGreen"
+            @click="registerUser"
+          >
+            Create account
+          </button>
+        </router-link>
+        <!--samo za prototip-->
       </div>
     </div>
   </div>
