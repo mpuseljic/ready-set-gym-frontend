@@ -111,10 +111,11 @@
                 ></canvas>
             </div>
         </div>
-        <nav-bar class="navbar" />
+        <!-- <nav-bar class="navbar" /> -->
     </div>
 </template>
 <script>
+/* eslint-disable */
 import Chart from "chart.js/auto";
 import NavBar from "./NavBar.vue";
 

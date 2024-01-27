@@ -65,17 +65,17 @@
                 </div>
             </div>
         </div>
-        <nav-bar class="navbar" />
+        <!-- <nav-bar class="navbar" /> -->
     </div>
 </template>
 
 <script>
-import NavBar from "./NavBar.vue";
+// import NavBar from "./NavBar.vue";
 
 export default {
-    name: "CalculateBMI",
+    name: "calculateBmiComponent",
     components: {
-        NavBar,
+        // NavBar,
     },
     data() {
         return {
