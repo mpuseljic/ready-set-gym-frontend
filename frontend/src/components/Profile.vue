@@ -1,9 +1,11 @@
 <template>
   <div class="heading">
     <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
-    <router-link to="/login">
-      <span class="material-symbols-outlined logout"> power_settings_new </span>
-    </router-link>
+    <button class="logout-button" style="background-color: black; border: none">
+      <span class="material-symbols-outlined logout" @click="logout">
+        power_settings_new
+      </span>
+    </button>
   </div>
   <div
     class="main"
@@ -169,10 +171,18 @@ export default {
         console.error(error.response.data);
       }
     },
+
+    async logout() {
+      localStorage.removeItem("token");
+      this.$router.push({ name: "login" });
+    },
   },
 };
 </script>
 <style>
+.logout-button {
+  border-radius: 100%;
+}
 .heading {
   margin: 0;
   padding: 1vw 5vw 0 2vw;

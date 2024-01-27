@@ -8,46 +8,63 @@ import HomePage from "../components/HomePage.vue";
 import ProfileUser from "../components/Profile.vue";
 
 const routes = [
-    {
-        path: "/signup",
-        name: "signup",
-        component: SignUp,
-    },
-    {
-        path: "/login",
-        name: "login",
-        component: LogIn,
-    },
-    {
-        path: "/",
-        name: "firstpage",
-        component: FirstPage,
-    },
-    {
-        path: "/bmi",
-        name: "bmi",
-        component: CalculateBMI,
-    },
-    {
-        path: "/diary",
-        name: "diary",
-        component: DiaryEntry,
-    },
-    {
-        path: "/home",
-        name: "home",
-        component: HomePage,
-    },
-    {
-        path: "/profile",
-        name: "profile",
-        component: ProfileUser,
-    },
+  {
+    path: "/signup",
+    name: "signup",
+    component: SignUp,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LogIn,
+  },
+  {
+    path: "/",
+    name: "firstpage",
+    component: FirstPage,
+  },
+  {
+    path: "/bmi",
+    name: "bmi",
+    component: CalculateBMI,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/diary",
+    name: "diary",
+    component: DiaryEntry,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/home",
+    name: "home",
+    component: HomePage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfileUser,
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes,
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      next({ name: "login" });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
