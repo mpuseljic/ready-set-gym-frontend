@@ -117,12 +117,12 @@
 <script>
 /* eslint-disable */
 import Chart from "chart.js/auto";
-import NavBar from "./NavBar.vue";
+// import NavBar from "./NavBar.vue";
 
 export default {
     name: "DiaryEntry",
     components: {
-        NavBar,
+        // NavBar,
     },
     data() {
         return {

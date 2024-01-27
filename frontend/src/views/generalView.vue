@@ -1,38 +1,36 @@
 <template>
     <div id="generalCarousel" class="carousel slide">
-        <div class="carousel-indicators">
-            <button
-                type="button"
-                data-bs-target="#generalCarousel"
-                data-bs-slide-to="0"
-                class="active"
-                aria-current="true"
-                aria-label="Slide 1"
-            ></button>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <span
+                    v-for="(item, index) in carouselItems"
+                    :key="index"
+                    @click="changeSlide(index)"
+                    :class="{
+                        'navbar-icons material-symbols-outlined': true,
+                        active: activeSlide === index,
+                    }"
+                    data-bs-target="#generalCarousel"
+                    :data-bs-slide-to="index"
+                    aria-current="true"
+                >
+                    {{ item.name }}
+                </span>
+            </div>
+        </nav>
 
-            <button
-                type="button"
-                data-bs-target="#generalCarousel"
-                data-bs-slide-to="1"
-                aria-label="Slide 2"
-            ></button>
-
-            <button
-                type="button"
-                data-bs-target="#generalCarousel"
-                data-bs-slide-to="2"
-                aria-label="Slide 3"
-            ></button>
-        </div>
         <div class="carousel-inner">
-            <div class="carousel-item active">
+            <div :class="{ 'carousel-item': true, active: activeSlide === 0 }">
                 <home-page />
             </div>
-            <div class="carousel-item">
-                <profile />
+            <div :class="{ 'carousel-item': true, active: activeSlide === 1 }">
+                <calculate-bmi-component />
             </div>
-            <div class="carousel-item">
+            <div :class="{ 'carousel-item': true, active: activeSlide === 2 }">
                 <diary />
+            </div>
+            <div :class="{ 'carousel-item': true, active: activeSlide === 3 }">
+                <profile />
             </div>
         </div>
     </div>
@@ -46,15 +44,41 @@ import calculateBmiComponent from "@/components/CalculateBMI.vue";
 
 export default {
     name: "generalView",
-    data: () => ({}),
+    data() {
+        return {
+            activeSlide: 0,
+            carouselItems: [
+                { name: "home" },
+                { name: "insert_chart" },
+                { name: "description" },
+                { name: "person" },
+            ],
+        };
+    },
     components: {
         HomePage,
         Profile,
         Diary,
+        calculateBmiComponent,
+    },
+    methods: {
+        changeSlide(index) {
+            this.activeSlide = index;
+        },
     },
 };
 </script>
 <style>
+.navbar {
+    height: 5.5vh;
+}
+.navbar-icons {
+    scale: 1.3;
+    cursor: pointer;
+}
+.active {
+    color: orange;
+}
 .carousel-inner {
     width: 100vw;
     height: 100vh;
@@ -63,6 +87,6 @@ export default {
     width: 100vw;
     height: 100vh;
     overflow-y: auto;
-    background-color: gray;
+    background-color: #000;
 }
 </style>
