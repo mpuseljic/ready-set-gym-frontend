@@ -5,9 +5,14 @@
         <span class="btn-dark material-symbols-outlined"> arrow_back_ios </span>
       </router-link>
     </div>
-    <h2 :style="{ color: 'white', 'text-align': 'center' }">Change Password</h2>
+    <h2 :style="{ color: 'white', 'text-align': 'center' }">Edit Profile</h2>
 
     <div class="input-signup">
+      <h3 class="naziv">First Name</h3>
+      <input type="text" v-model="firstName" class="input-field" required />
+      <h3 class="naziv">Last Name</h3>
+      <input type="text" v-model="lastName" class="input-field" required />
+
       <h3 class="naziv">Old Password</h3>
       <input
         type="password"
@@ -30,7 +35,7 @@
           :style="btnStyleGreen"
           @click="changePassword"
         >
-          Change Password
+          Save Changes
         </button>
       </div>
     </div>
@@ -44,6 +49,8 @@ export default {
   name: "ChangePassword",
   data() {
     return {
+      firstName: "",
+      lastName: "",
       oldPassword: "",
       newPassword: "",
       btnStyleGreen: {
@@ -59,6 +66,8 @@ export default {
       try {
         const token = localStorage.getItem("token");
         const formData = {
+          firstName: this.firstName,
+          lastName: this.lastName,
           old_password: this.oldPassword,
           new_password: this.newPassword,
         };
