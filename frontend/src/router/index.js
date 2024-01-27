@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createRouter, createWebHistory } from "vue-router";
 import SignUp from "../views/SignUp.vue";
 import LogIn from "../views/LogIn.vue";
@@ -6,6 +7,8 @@ import CalculateBMI from "../components/CalculateBMI.vue";
 import DiaryEntry from "../components/Diary.vue";
 import HomePage from "../components/HomePage.vue";
 import ProfileUser from "../components/Profile.vue";
+import EditProfile from "@/components/EditProfile.vue";
+import generalView from "@/views/generalView.vue";
 
 const routes = [
   {
@@ -38,13 +41,19 @@ const routes = [
   {
     path: "/home",
     name: "home",
-    component: HomePage,
+    component: generalView,
     meta: { requiresAuth: true },
   },
   {
     path: "/profile",
     name: "profile",
     component: ProfileUser,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/edit-profile",
+    name: "EditProfile",
+    component: EditProfile,
     meta: { requiresAuth: true },
   },
 ];

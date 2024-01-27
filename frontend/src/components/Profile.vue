@@ -18,7 +18,7 @@
       <h1 style="color: white">My Profile</h1>
     </div>
 
-    <div class="user-profile-img">
+    <div class="user-profile-img" @click="editProfile">
       <span
         class="material-symbols-outlined profile-pic"
         :style="{ backgroundImage: 'url(' + profilePicture + ')' }"
@@ -140,6 +140,7 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import axios from "axios";
+
 export default {
   name: "ProfileUser",
   components: {
@@ -175,6 +176,9 @@ export default {
     async logout() {
       localStorage.removeItem("token");
       this.$router.push({ name: "login" });
+    },
+    editProfile() {
+      this.$router.push({ name: "EditProfile" });
     },
   },
 };
