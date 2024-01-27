@@ -27,7 +27,7 @@
     <div class="my-workout">
       <h3 style="color: white">Choose what you want</h3>
     </div>
-    <div id="carouselExampleCaptionsProfile" class="carousel slide">
+    <div id="carouselExampleCaptionsProfile" class="carousel">
       <div class="carousel-indicators">
         <button
           type="button"

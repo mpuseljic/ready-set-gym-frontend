@@ -28,7 +28,7 @@
     <div class="recommended-workout">
       <h1 style="color: white">RECOMMENDED WORKOUTS</h1>
     </div>
-    <div id="carouselExampleCaptions" class="carousel slide">
+    <div id="carouselExampleCaptions" class="carousel">
       <div class="carousel-indicators">
         <button
           type="button"
@@ -122,7 +122,7 @@
     <div class="my-workout">
       <h1 style="color: white">MY WORKOUTS</h1>
     </div>
-    <div id="carouselExampleCaptionsMyWorkouts" class="carousel slide">
+    <div id="carouselExampleCaptionsMyWorkouts" class="carousel">
       <div class="carousel-indicators">
         <button
           type="button"
