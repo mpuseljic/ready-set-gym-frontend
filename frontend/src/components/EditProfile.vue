@@ -1,41 +1,26 @@
 <template>
   <div class="main">
     <div class="header" :style="{ 'padding-left': '15px' }">
-      <router-link to="/profile" class="btn-dark" style="width: 100px">
+      <router-link to="/home" class="btn-dark" style="width: 100px">
         <span class="btn-dark material-symbols-outlined"> arrow_back_ios </span>
       </router-link>
     </div>
-    <h2 :style="{ color: 'white', 'text-align': 'center' }">Edit Profile</h2>
+    <h2 :style="{ color: 'white', 'text-align': 'center' }">Change Password</h2>
 
     <div class="input-signup">
-      <h3 class="naziv">First name</h3>
+      <h3 class="naziv">Old Password</h3>
       <input
-        type="text"
-        v-model="editedUser.firstName"
-        class="input-field"
-        required
-      />
-      <h3 class="naziv">Last name</h3>
-      <input
-        type="text"
-        v-model="editedUser.lastName"
+        type="password"
+        v-model="oldPassword"
         class="input-field"
         required
       />
       <h3 class="naziv">New Password</h3>
       <input
         type="password"
-        v-model="editedUser.password"
+        v-model="newPassword"
         class="input-field"
-      />
-
-      <!-- Dodaj novi input za odabir slike -->
-      <h3 class="naziv">Profile Picture</h3>
-      <input
-        type="file"
-        accept="image/*"
-        @change="onFileChange"
-        class="input-field"
+        required
       />
 
       <div class="submit">
@@ -43,9 +28,9 @@
           type="button"
           class="btn btn-success"
           :style="btnStyleGreen"
-          @click="saveChanges"
+          @click="changePassword"
         >
-          Save Changes
+          Change Password
         </button>
       </div>
     </div>
@@ -56,15 +41,11 @@
 import axios from "axios";
 
 export default {
-  name: "EditProfile",
+  name: "ChangePassword",
   data() {
     return {
-      editedUser: {
-        firstName: "",
-        lastName: "",
-        password: "",
-        profilePicture: null, // Dodaj novi property za sliku profila
-      },
+      oldPassword: "",
+      newPassword: "",
       btnStyleGreen: {
         borderRadius: "20px",
         width: "300px",
@@ -74,36 +55,23 @@ export default {
     };
   },
   methods: {
-    async saveChanges() {
+    async changePassword() {
       try {
         const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("userId");
-
-        // Kreiraj FormData objekt za slanje podataka
-        const formData = new FormData();
-        formData.append("firstName", this.editedUser.firstName);
-        formData.append("lastName", this.editedUser.lastName);
-        formData.append("password", this.editedUser.password);
-        formData.append("profilePicture", this.editedUser.profilePicture); // Dodaj sliku profila
-
-        await axios.patch(
-          `http://localhost:3000/users/profile/${userId}`,
-          formData, // Pošalji FormData objekt umjesto plain objecta
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data", // Postavi content type na multipart/form-data
-            },
-          }
-        );
+        const formData = {
+          old_password: this.oldPassword,
+          new_password: this.newPassword,
+        };
+        await axios.patch(`http://localhost:3000/user`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
         this.$router.push({ name: "profile" });
       } catch (error) {
-        console.error(error.response.data);
+        console.error(error.response);
       }
-    },
-    onFileChange(event) {
-      // Postavi odabranu sliku u editedUser objekt
-      this.editedUser.profilePicture = event.target.files[0];
     },
   },
 };
