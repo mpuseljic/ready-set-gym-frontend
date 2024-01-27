@@ -22,7 +22,7 @@
         :style="{ backgroundImage: 'url(' + profilePicture + ')' }"
       >
       </span>
-      <h2 style="margin-top: 20px">Luka Benković</h2>
+      <h2 style="margin-top: 20px">{{ userFullName }}</h2>
     </div>
     <div class="my-workout">
       <h3 style="color: white">Choose what you want</h3>
@@ -137,6 +137,7 @@
 </template>
 <script>
 import NavBar from "@/components/NavBar.vue";
+import axios from "axios";
 export default {
   name: "ProfileUser",
   components: {
@@ -145,7 +146,29 @@ export default {
   data() {
     return {
       profilePicture: require("../assets/profile.jpg"),
+      userFullName: "",
     };
+  },
+  created() {
+    this.getUserProfile();
+  },
+  methods: {
+    async getUserProfile() {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          "http://localhost:3000/users/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        this.userFullName = `${response.data.firstName} ${response.data.lastName}`;
+      } catch (error) {
+        console.error(error.response.data);
+      }
+    },
   },
 };
 </script>
