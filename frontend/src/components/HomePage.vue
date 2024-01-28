@@ -287,6 +287,20 @@
     <!--exercise list-->
     <div class="exercise-list">
       <h1 style="color: white">EXERCISE LIST</h1>
+      <div
+        class="exercise-card"
+        v-for="exercise in exerciseList"
+        :key="exercise._id"
+      >
+        <img
+          :src="exercise.img_url"
+          alt="Exercise Image"
+          class="exercise-image"
+        />
+        <div class="exercise-content">
+          <h2>{{ exercise.title }}</h2>
+        </div>
+      </div>
     </div>
 
     <!-- <nav-bar class="navbar" /> -->
@@ -299,13 +313,14 @@
 import eventBus from "@/eventBus";
 import exerciseModalBody from "@/modals/exerciseModalBody.vue";
 // import NavBar from "@/components/NavBar.vue";
-
+import axios from "axios";
 export default {
   name: "HomePage",
   data() {
     return {
       activeModal: false,
       clickedInsideModal: false,
+      exerciseList: [],
     };
   },
   components: {
@@ -325,6 +340,7 @@ export default {
         this.activeModal = true;
       }
     });
+    this.fetchExerciseList();
   },
   methods: {
     eventBusTest() {
@@ -342,6 +358,15 @@ export default {
     closeModal() {
       if (!this.clickedInsideModal) {
         this.activeModal = false;
+      }
+    },
+
+    async fetchExerciseList() {
+      try {
+        const response = await axios.get("http://localhost:3000/exercises");
+        this.exerciseList = response.data;
+      } catch (error) {
+        console.error("Error fetching exercise list:", error);
       }
     },
   },
@@ -423,5 +448,28 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+}
+
+.exercise-card {
+  width: 80%;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.exercise-content {
+  flex: 1;
+}
+
+.exercise-content h2 {
+  margin: 0;
+  text-align: center;
+}
+
+.exercise-image {
+  max-width: 200px;
+  height: auto;
+  margin-right: 50px;
 }
 </style>
