@@ -8,7 +8,16 @@
         close
       </span>
       <div class="modal-inner">
-        <!-- Sadržaj modala, isto kao i EditProfile.vue -->
+        <h1 :style="{ color: '#d29433', 'text-align': 'center' }">
+          Edit Profile
+        </h1>
+        <div class="user-profile-img">
+          <span
+            class="material-symbols-outlined profile-pic"
+            :style="{ backgroundImage: 'url(' + profilePicture + ')' }"
+          >
+          </span>
+        </div>
         <div class="input-signup">
           <h3 class="naziv">First Name</h3>
           <input type="text" v-model="firstName" class="input-field" required />
@@ -59,6 +68,7 @@ export default {
   },
   data() {
     return {
+      profilePicture: "@/assets/profile.jpg",
       firstName: "",
       lastName: "",
       oldPassword: "",
@@ -135,5 +145,12 @@ export default {
   scale: 1.7;
   color: #fff;
   cursor: pointer;
+}
+.user-profile-img {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
