@@ -18,7 +18,7 @@
       <h1 style="color: white">My Profile</h1>
     </div>
 
-    <div class="user-profile-img" @click="editProfile">
+    <div class="user-profile-img" @click="openModal">
       <span
         class="material-symbols-outlined profile-pic"
         :style="{ backgroundImage: 'url(' + profilePicture + ')' }"
@@ -26,6 +26,7 @@
       </span>
       <h2 style="margin-top: 20px">{{ userFullName }}</h2>
     </div>
+    <EditProfileModal :activeModal="modalOpen" @closeModal="closeModal" />
     <div class="my-workout">
       <h3 style="color: white">Choose what you want</h3>
     </div>
@@ -174,16 +175,19 @@
 <script>
 // import NavBar from "@/components/NavBar.vue";
 import axios from "axios";
+import EditProfileModal from "@/modals/editProfileModal.vue";
 
 export default {
   name: "ProfileUser",
   components: {
     // NavBar,
+    EditProfileModal,
   },
   data() {
     return {
       profilePicture: require("../assets/profile.jpg"),
       userFullName: "",
+      modalOpen: false,
     };
   },
   created() {
@@ -213,6 +217,12 @@ export default {
     },
     editProfile() {
       this.$router.push({ name: "EditProfile" });
+    },
+    openModal() {
+      this.modalOpen = true;
+    },
+    closeModal() {
+      this.modalOpen = false;
     },
   },
 };
