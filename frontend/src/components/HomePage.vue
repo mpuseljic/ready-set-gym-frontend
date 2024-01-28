@@ -1,6 +1,11 @@
 <template>
     <div class="heading">
-        <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
+        <img
+            class="heading-img"
+            src="@/assets/logorsg.jpg"
+            alt=""
+            @click="eventBusTest(), toggleModal()"
+        />
     </div>
     <div
         class="main"
@@ -280,15 +285,39 @@
         </div>
 
         <!-- <nav-bar class="navbar" /> -->
+        <exercise-modal-body :active-modal="activeModal" />
     </div>
 </template>
 <script>
+/* eslint-disable */
+import eventBus from "@/eventBus";
+import exerciseModalBody from "@/modals/exerciseModalBody.vue";
 // import NavBar from "@/components/NavBar.vue";
 
 export default {
     name: "HomePage",
+    data() {
+        return {
+            activeModal: false,
+        };
+    },
     components: {
         // NavBar,
+        exerciseModalBody,
+    },
+    created() {
+        eventBus.on("closeModal", (closeModalData) => {
+            if (closeModalData.closeModal) this.activeModal = false;
+        });
+    },
+    methods: {
+        eventBusTest() {
+            let id = 4;
+            eventBus.emit("test", id);
+        },
+        toggleModal() {
+            this.activeModal = !this.activeModal;
+        },
     },
 };
 </script>
