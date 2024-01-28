@@ -21,6 +21,7 @@
         class="form-control"
         placeholder="Search anything..."
         style="background-color: #9a9494; color: black"
+        v-model="searchText"
       />
     </div>
 
@@ -289,7 +290,7 @@
       <h1 style="color: white">EXERCISE LIST</h1>
       <div
         class="exercise-card"
-        v-for="exercise in exerciseList"
+        v-for="exercise in filterExercises()"
         :key="exercise._id"
       >
         <img
@@ -321,6 +322,7 @@ export default {
       activeModal: false,
       clickedInsideModal: false,
       exerciseList: [],
+      searchText: "",
     };
   },
   components: {
@@ -368,6 +370,14 @@ export default {
       } catch (error) {
         console.error("Error fetching exercise list:", error);
       }
+    },
+
+    filterExercises() {
+      return this.exerciseList.filter((exercise) => {
+        return exercise.title
+          .toLowerCase()
+          .includes(this.searchText.toLocaleLowerCase());
+      });
     },
   },
 };
