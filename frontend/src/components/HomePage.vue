@@ -428,6 +428,7 @@ export default {
 .my-workout,
 .exercise-list {
   margin: 50px;
+  margin-top: 70px;
 }
 .carousel-inner {
   height: 60vh;
@@ -439,6 +440,7 @@ export default {
 }
 
 .navbar {
+  margin-bottom: 20px;
   position: fixed;
   bottom: 0;
   left: 0;
