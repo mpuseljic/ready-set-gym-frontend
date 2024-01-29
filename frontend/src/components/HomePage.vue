@@ -137,7 +137,7 @@
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </template>
-        <v-carousel-item cover @click="openModal('CROSSFIT')">
+        <v-carousel-item cover @click="openModal('crossFit')">
           <img class="carousel-image" src="../assets/crossfit.jpg" />
           <div class="carousel-caption d-none d-md-block">
             <h1>CROSSFIT</h1>
@@ -151,7 +151,7 @@
           </div>
         </v-carousel-item>
 
-        <v-carousel-item cover @click="openModal('LOWER-BODY')">
+        <v-carousel-item cover @click="openModal('lowerBody')">
           <img class="carousel-image" src="../assets/lower-body.jpg" />
           <div class="carousel-caption d-none d-md-block">
             <h1>LOWER BODY ATTACK</h1>
@@ -163,7 +163,7 @@
           </div>
         </v-carousel-item>
 
-        <v-carousel-item cover @click="openModal('UPPER-BODY')">
+        <v-carousel-item cover @click="openModal('upperBody')">
           <img class="carousel-image" src="../assets/upper-body.jpg" />
           <div class="carousel-caption d-none d-md-block">
             <h1>UPPER BODY ATTACK</h1>
@@ -305,7 +305,10 @@
     </div>
 
     <!-- <nav-bar class="navbar" /> -->
-    <exercise-modal-body :active-modal="activeModal" />
+    <exercise-modal-body
+      :active-modal="activeModal"
+      :workoutData="activeWorkoutData"
+    />
     <div class="modal-overlay" v-if="activeModal" @click="closeModal"></div>
   </div>
 </template>
@@ -323,6 +326,7 @@ export default {
       clickedInsideModal: false,
       exerciseList: [],
       searchText: "",
+      activeWorkoutData: null,
     };
   },
   components: {
@@ -352,11 +356,20 @@ export default {
     toggleModal() {
       this.activeModal = !this.activeModal;
     },
-    openModal(workoutName) {
+    async openModal(workoutType) {
       this.clickedInsideModal = false;
       this.activeModal = true;
-      eventBus.emit("openModal", { workoutName });
+
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/recommendedworkouts/${workoutType}`
+        );
+        this.activeWorkoutData = response.data;
+      } catch (error) {
+        console.error("Error fetching recommended workout data:", error);
+      }
     },
+
     closeModal() {
       if (!this.clickedInsideModal) {
         this.activeModal = false;
@@ -378,6 +391,19 @@ export default {
           .toLowerCase()
           .includes(this.searchText.toLocaleLowerCase());
       });
+    },
+    async openModal(workoutType) {
+      this.clickedInsideModal = false;
+      this.activeModal = true;
+
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/recommendedworkouts/${workoutType}`
+        );
+        this.activeWorkoutData = response.data;
+      } catch (error) {
+        console.error("Error fetching recommended workout data:", error);
+      }
     },
   },
 };

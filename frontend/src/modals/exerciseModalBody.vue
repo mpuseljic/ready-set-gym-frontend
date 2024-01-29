@@ -1,90 +1,145 @@
 <template>
-    <transition name="modal-animation">
-        <div v-show="activeModal" class="modal-outer">
-            <span
-                class="material-symbols-outlined exit-button-modal"
-                @click="closeModal()"
+  <transition name="modal-animation">
+    <div v-show="activeModal" class="modal-outer">
+      <span
+        class="material-symbols-outlined exit-button-modal"
+        @click="closeModal()"
+        >close</span
+      >
+      <div class="modal-inner">
+        <div class="modal-content" v-if="workoutData">
+          <div class="image-container">
+            <img
+              :src="workoutData.image"
+              alt="Workout Image"
+              style="width: 100%; max-height: 400px; object-fit: cover"
+            />
+          </div>
+          <h1 style="color: #d29433">{{ workoutData.title }}</h1>
+          <div v-if="workoutData.exercises">
+            <div
+              v-for="(exercise, index) in workoutData.exercises"
+              :key="index"
+              class="exercise-container"
             >
-                close
-            </span>
-            <div class="modal-inner">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <h1>TEST</h1>
-                </div>
+              <img :src="exercise.img_url" alt="Exercise Image" />
+              <h2>{{ exercise.name }}</h2>
             </div>
+          </div>
         </div>
-    </transition>
+      </div>
+    </div>
+  </transition>
 </template>
 <script>
 import eventBus from "@/eventBus";
 
 export default {
-    name: "exerciseModalBody",
-    data() {
-        return {};
+  name: "exerciseModalBody",
+  data() {
+    return {};
+  },
+  props: {
+    activeModal: {
+      type: Boolean,
+      required: true,
     },
-    props: {
-        activeModal: {
-            type: Boolean,
-            required: true,
-        },
+    workoutData: {
+      type: Object,
+      default: null,
     },
-    components: {},
-    created() {
-        eventBus.on("test", (id) => {
-            console.log("ID", id);
-            console.log(this.activeModal);
-        });
-    },
-    methods: {
-        closeModal() {
-            // dodati logiku samo za modal bodyje sa formom
-            const closeModal = true;
-            const clearForm = true;
+  },
+  components: {},
+  created() {
+    eventBus.on("test", (id) => {
+      console.log("ID", id);
+      console.log(this.activeModal);
+    });
+  },
+  methods: {
+    closeModal() {
+      const closeModal = true;
+      const clearForm = true;
 
-            const closeModalData = {
-                closeModal: closeModal,
-                clearForm: clearForm,
-            };
-            eventBus.emit("closeModal", closeModalData);
-        },
+      const closeModalData = {
+        closeModal: closeModal,
+        clearForm: clearForm,
+      };
+      eventBus.emit("closeModal", closeModalData);
     },
+  },
 };
 </script>
 <style>
 .modal-outer {
-    position: fixed;
-    top: 5%;
-    left: 25%;
-    width: 50%;
-    height: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #1c1c1c;
-    border: 2px solid white;
-    z-index: 9999;
+  position: fixed;
+  top: 5%;
+  left: 25%;
+  width: 50%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c1c1c;
+  border: 2px solid white;
+  z-index: 9999;
+  overflow-y: auto;
 }
 
 .modal-inner {
-    position: relative;
-    width: 90%;
-    padding: 20px;
+  position: relative;
+  width: 90%;
+  padding: 20px;
 }
 
 .modal-content {
-    border: none;
-    background-color: rgba(21, 21, 21, 0);
+  border: none;
+  background-color: rgba(21, 21, 21, 0);
 }
 
 .exit-button-modal {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 27px;
-    scale: 1.7;
-    color: #fff;
-    cursor: pointer;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 27px;
+  scale: 1.7;
+  color: #fff;
+  cursor: pointer;
+}
+.modal-content {
+  display: flex;
+  align-items: center;
+}
+
+.modal-content h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.exercise-container {
+  align-items: center;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.exercise-container img {
+  max-width: 200px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.exercise-container h2 {
+  text-align: center;
+  margin: 0;
+}
+
+.image-container {
+  margin-top: 220%;
 }
 </style>
