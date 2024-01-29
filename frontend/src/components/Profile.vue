@@ -44,17 +44,29 @@
         </template>
         <v-carousel-item cover>
           <img class="carousel-image" src="../assets/profile-one.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h3>RECOMMENDED WORKOUTS</h3>
+          </div>
         </v-carousel-item>
 
         <v-carousel-item cover>
           <img class="carousel-image" src="../assets/profile-second.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h3>MY WORKOUTS</h3>
+          </div>
         </v-carousel-item>
 
         <v-carousel-item cover>
           <img class="carousel-image" src="../assets/food.avif" />
+          <div class="carousel-caption d-none d-md-block">
+            <h3>FOOD</h3>
+          </div>
         </v-carousel-item>
         <v-carousel-item cover>
           <img class="carousel-image" src="../assets/bmi.jpg" />
+          <div class="carousel-caption d-none d-md-block">
+            <h3>CALCULATE BMI</h3>
+          </div>
         </v-carousel-item>
       </v-carousel>
     </v-container>
