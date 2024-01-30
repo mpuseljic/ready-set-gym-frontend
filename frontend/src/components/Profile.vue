@@ -42,7 +42,7 @@
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </template>
-        <v-carousel-item cover>
+        <v-carousel-item cover @click="openRecommendedModal">
           <img class="carousel-image" src="../assets/profile-one.jpg" />
           <div class="carousel-caption d-none d-md-block">
             <h3>RECOMMENDED WORKOUTS</h3>
@@ -70,6 +70,7 @@
         </v-carousel-item>
       </v-carousel>
     </v-container>
+
     <!-- <div id="carouselExampleCaptionsProfile" class="carousel">
             <div class="carousel-indicators">
                 <button
@@ -182,24 +183,32 @@
       </div>
     </div>
     <!-- <nav-bar class="navbar" /> -->
+    <RecommendedModal
+      :activeModal="recommendedModalOpen"
+      @closeModal="closeRecommendedModal"
+    />
   </div>
 </template>
 <script>
+/* eslint-disable */
 // import NavBar from "@/components/NavBar.vue";
 import axios from "axios";
 import EditProfileModal from "@/modals/editProfileModal.vue";
+import RecommendedModal from "@/modals/recommendedModal.vue";
 
 export default {
   name: "ProfileUser",
   components: {
     // NavBar,
     EditProfileModal,
+    RecommendedModal,
   },
   data() {
     return {
       profilePicture: require("../assets/profile.jpg"),
       userFullName: "",
       modalOpen: false,
+      recommendedModalOpen: false,
     };
   },
   created() {
@@ -235,6 +244,12 @@ export default {
     },
     closeModal() {
       this.modalOpen = false;
+    },
+    openRecommendedModal() {
+      this.recommendedModalOpen = true;
+    },
+    closeRecommendedModal() {
+      this.recommendedModalOpen = false;
     },
   },
 };
