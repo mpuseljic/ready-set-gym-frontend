@@ -392,19 +392,6 @@ export default {
           .includes(this.searchText.toLocaleLowerCase());
       });
     },
-    async openModal(workoutType) {
-      this.clickedInsideModal = false;
-      this.activeModal = true;
-
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/recommendedworkouts/${workoutType}`
-        );
-        this.activeWorkoutData = response.data;
-      } catch (error) {
-        console.error("Error fetching recommended workout data:", error);
-      }
-    },
   },
 };
 </script>
