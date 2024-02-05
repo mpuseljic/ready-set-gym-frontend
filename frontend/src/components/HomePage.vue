@@ -94,7 +94,7 @@
             <span
                 class="material-symbols-outlined"
                 style="margin-left: 1vw; scale: 1.5; cursor: pointer"
-                @click="testAPI"
+                @click="openAddNewModal"
             >
                 add_box
             </span>
@@ -156,6 +156,7 @@
             :active-modal="activeModal"
             :workoutData="activeWorkoutData"
         />
+        <add-new-plan-modal :active-modal="activeModal" />
         <div class="modal-overlay" v-if="activeModal" @click="closeModal"></div>
     </div>
 </template>
@@ -163,8 +164,9 @@
 /* eslint-disable */
 import eventBus from "@/eventBus";
 import exerciseModalBody from "@/modals/exerciseModalBody.vue";
-// import NavBar from "@/components/NavBar.vue";
+import addNewPlanModal from "@/modals/addNewModal.vue";
 import axios from "axios";
+// import NavBar from "@/components/NavBar.vue";
 export default {
     name: "HomePage",
     data() {
@@ -178,6 +180,7 @@ export default {
     },
     components: {
         // NavBar,
+        addNewPlanModal,
         exerciseModalBody,
     },
     created() {
@@ -219,16 +222,20 @@ export default {
                 );
             }
         },
-        async testAPI() {
-            try {
-                const response = await axios.get(
-                    "https://www.themealdb.com/api/json/v1/1/random.php"
-                );
-                console.log(response);
-            } catch (error) {
-                console.error("ERROR FETCHING API", error);
-            }
+        async openAddNewModal() {
+            this.activeModal = true;
+            console.log("openAdd");
         },
+        // async testAPI() {
+        //     try {
+        //         const response = await axios.get(
+        //             "https://www.themealdb.com/api/json/v1/1/random.php"
+        //         );
+        //         console.log(response);
+        //     } catch (error) {
+        //         console.error("ERROR FETCHING API", error);
+        //     }
+        // },
 
         closeModal() {
             if (!this.clickedInsideModal) {

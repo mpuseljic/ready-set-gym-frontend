@@ -206,7 +206,7 @@ export default {
 }
 
 .form-control {
-    background-color: bisque;
+    background-color: #f8f8ff;
     display: flex;
     flex-direction: column;
     justify-content: center;
