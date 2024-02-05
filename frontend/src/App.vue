@@ -15,8 +15,15 @@ export default {
 * {
     font-family: Poppins, sans-serif;
     color: white;
+    scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+    display: none;
 }
 body {
     background-color: #000;
+}
+.exit-button-modal {
+    z-index: 99;
 }
 </style>
