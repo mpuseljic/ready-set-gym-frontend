@@ -170,15 +170,13 @@
     <div class="my-diaries">
       <h2 class="my-diaries-text">Read my diaries</h2>
     </div>
-
-    <div class="card-container">
+    <div v-for="(diary, index) in diaries" :key="index" class="card-container">
       <div class="card">
         <div class="card-heading">
-          <h5 class="class-heading-text">TEST</h5>
-          <span class="material-symbols-outlined delete"> delete </span>
+          <h5 class="class-heading-text">{{ diary.date }}</h5>
         </div>
         <div class="card-content">
-          <p class="card-text">Hello Mirna</p>
+          <p class="card-text">{{ diary.content }}</p>
         </div>
       </div>
     </div>
@@ -209,10 +207,12 @@ export default {
       userFullName: "",
       modalOpen: false,
       recommendedModalOpen: false,
+      diaries: [],
     };
   },
   created() {
     this.getUserProfile();
+    this.getUserDiary();
   },
   methods: {
     async getUserProfile() {
@@ -250,6 +250,22 @@ export default {
     },
     closeRecommendedModal() {
       this.recommendedModalOpen = false;
+    },
+    async getUserDiary() {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          "http://localhost:3000/users/profile-diary",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        this.diaries = response.data;
+      } catch (error) {
+        console.error(error.response.data);
+      }
     },
   },
 };
