@@ -8,109 +8,69 @@
         close
       </span>
       <div class="modal-inner">
-        <h1 :style="{ color: '#d29433', 'text-align': 'center' }">
-          BMI CALCULATOR
-        </h1>
-        <div class="input">
-          <input
-            style="background-color: #d29433"
-            class="form-control height"
-            v-model="height"
-            type="number"
-            placeholder="Height (cm)"
-          />
-          <input
-            style="background-color: #d29433"
-            class="form-control weight"
-            v-model="weight"
-            type="number"
-            placeholder="Weight (kg)"
-          />
-          <input
-            style="background-color: #d29433"
-            class="form-control age"
-            v-model="age"
-            type="number"
-            placeholder="Age"
-          />
-        </div>
+        <div>
+          <div class="heading">
+            <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
+          </div>
+          <div class="main">
+            <div class="gender">
+              <h1 class="naslov" style="padding-top: 50px">BMI CALCULATOR</h1>
+              <button
+                @click="maleChoose"
+                :class="{ 'btn-primary': male, 'btn-secondary': !male }"
+                :style="maleBtnStyle"
+                size="lg"
+              >
+                <i class="bi bi-gender-male" style="font-size: 2rem"></i>
+              </button>
+              <button
+                @click="femaleChoose"
+                :class="{ 'btn-primary': female, 'btn-secondary': !female }"
+                :style="femaleBtnStyle"
+                size="lg"
+              >
+                <i class="bi bi-gender-female" style="font-size: 2rem"></i>
+              </button>
+            </div>
+            <div class="bmi">
+              <div class="input">
+                <input
+                  style="background-color: #d29433"
+                  class="form-control height"
+                  v-model="height"
+                  type="number"
+                  placeholder="Height (cm)"
+                />
+                <input
+                  style="background-color: #d29433"
+                  class="form-control weight"
+                  v-model="weight"
+                  type="number"
+                  placeholder="Weight (kg)"
+                />
+                <input
+                  style="background-color: #d29433"
+                  class="form-control age"
+                  v-model="age"
+                  type="number"
+                  placeholder="Age"
+                />
+              </div>
 
-        <button class="btn btn-success" @click="calculateBMI">Calculate</button>
+              <button class="btn btn-success" @click="calculateBMI">
+                Calculate
+              </button>
 
-        <div v-if="bmi != null">
-          <h2 class="result">Your BMI: {{ bmi }}</h2>
-          <p class="message">{{ bmiMessage }}</p>
+              <div v-if="bmi != null">
+                <h2 class="result">Your BMI: {{ bmi }}</h2>
+                <p class="message">{{ bmiMessage }}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </transition>
-
-  <div>
-    <div class="heading">
-      <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
-    </div>
-    <div class="main" style="background-color: black; margin: 0">
-      <div class="header" style="padding-left: 15px">
-        <router-link to="/" class="btn-dark" style="width: 50px">
-          <span class="btn-dark material-symbols-outlined">
-            arrow_back_ios
-          </span>
-        </router-link>
-      </div>
-      <div class="gender">
-        <h1 class="naslov">BMI CALCULATOR</h1>
-        <button
-          @click="maleChoose"
-          :class="{ 'btn-primary': male, 'btn-secondary': !male }"
-          :style="maleBtnStyle"
-          size="lg"
-        >
-          <i class="bi bi-gender-male" style="font-size: 2rem"></i>
-        </button>
-        <button
-          @click="femaleChoose"
-          :class="{ 'btn-primary': female, 'btn-secondary': !female }"
-          :style="femaleBtnStyle"
-          size="lg"
-        >
-          <i class="bi bi-gender-female" style="font-size: 2rem"></i>
-        </button>
-      </div>
-      <div class="bmi">
-        <div class="input">
-          <input
-            style="background-color: #d29433"
-            class="form-control height"
-            v-model="height"
-            type="number"
-            placeholder="Height (cm)"
-          />
-          <input
-            style="background-color: #d29433"
-            class="form-control weight"
-            v-model="weight"
-            type="number"
-            placeholder="Weight (kg)"
-          />
-          <input
-            style="background-color: #d29433"
-            class="form-control age"
-            v-model="age"
-            type="number"
-            placeholder="Age"
-          />
-        </div>
-
-        <button class="btn btn-success" @click="calculateBMI">Calculate</button>
-
-        <div v-if="bmi != null">
-          <h2 class="result">Your BMI: {{ bmi }}</h2>
-          <p class="message">{{ bmiMessage }}</p>
-        </div>
-      </div>
-    </div>
-    <!-- <nav-bar class="navbar" /> -->
-  </div>
 </template>
 
 <script>
@@ -195,11 +155,11 @@ export default {
   top: 5%;
   left: 25%;
   width: 50%;
-  height: 90%;
+  height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1c1c1c;
+
   border: 2px solid white;
   z-index: 9999;
 }
@@ -207,7 +167,6 @@ export default {
 .modal-inner {
   position: relative;
   width: 90%;
-  padding: 20px;
 }
 
 .exit-button-modal {
