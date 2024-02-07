@@ -18,10 +18,11 @@
       <h1 style="color: white">My Profile</h1>
     </div>
 
-    <div class="user-profile-img" @click="openModal">
+    <div class="user-profile-img">
       <span
         class="material-symbols-outlined profile-pic"
         :style="{ backgroundImage: 'url(' + profilePicture + ')' }"
+        @click="openModal"
       >
       </span>
       <h2 style="margin-top: 20px">{{ userFullName }}</h2>
