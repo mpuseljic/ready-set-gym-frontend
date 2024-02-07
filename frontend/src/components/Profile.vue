@@ -174,6 +174,7 @@
       <div class="card">
         <div class="card-heading">
           <h5 class="class-heading-text">{{ diary.date }}</h5>
+          <button @click="deleteDiaryEntry(index)">Delete</button>
         </div>
         <div class="card-content">
           <p class="card-text">{{ diary.content }}</p>
@@ -263,6 +264,21 @@ export default {
           }
         );
         this.diaries = response.data;
+      } catch (error) {
+        console.error(error.response.data);
+      }
+    },
+    async deleteDiaryEntry(index) {
+      try {
+        const token = localStorage.getItem("token");
+        const diaryId = this.diaries[index]._id;
+        await axios.delete(`http://localhost:3000/diary/record/${diaryId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        this.diaries.splice(index, 1);
       } catch (error) {
         console.error(error.response.data);
       }
