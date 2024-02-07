@@ -148,45 +148,95 @@ export default {
       }
     },
 
-    recordWeight() {
-      console.log("Save weight: " + this.currentWeight);
+    async recordWeight() {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+          "http://localhost:3000/weight/record",
+          {
+            weight: this.currentWeight,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response.data.message);
+        this.updateChart();
+      } catch (error) {
+        console.error("Error recording weight:", error);
+      }
+    },
+    async updateChart() {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:3000/weight", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const weights = response.data.weights;
+        this.renderChart(weights);
+      } catch (error) {
+        console.error("Error fetching weights:", error);
+      }
+    },
+    renderChart(weights) {
+      const ctx = document.getElementById("myChart");
+
+      // Unicite prethodni grafikon ako postoji
+      if (this.chart) {
+        this.chart.destroy();
+      }
+
+      const monthLabels = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      const data = monthLabels.map((month) => {
+        const weightForMonth = weights.find((entry) => entry.month === month);
+        return weightForMonth ? weightForMonth.weight : null;
+      });
+
+      this.chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: monthLabels,
+          datasets: [
+            {
+              label: "Weight Progress",
+              data: data,
+              borderWidth: 5,
+              backgroundColor: "black",
+              borderColor: "#d29433",
+              tension: 0.2,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
     },
   },
   mounted() {
-    const ctx = document.getElementById("myChart");
-
-    const monthLabels = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-    ];
-
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: monthLabels,
-        datasets: [
-          {
-            label: "Weight Progress",
-            data: [70, 65, 50, 75, 72, 63],
-            borderWidth: 5,
-            backgroundColor: "black",
-            borderColor: "#d29433",
-            tension: 0.2,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
+    this.updateChart();
   },
 };
 </script>
