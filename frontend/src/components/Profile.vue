@@ -63,7 +63,7 @@
             <h3>FOOD</h3>
           </div>
         </v-carousel-item>
-        <v-carousel-item cover>
+        <v-carousel-item cover @click="openBMIcalculatorModal">
           <img class="carousel-image" src="../assets/bmi.jpg" />
           <div class="carousel-caption d-none d-md-block">
             <h3>CALCULATE BMI</h3>
@@ -187,6 +187,11 @@
       :activeModal="recommendedModalOpen"
       @closeModal="closeRecommendedModal"
     />
+
+    <BMICalculatorModal
+      :activeModal="BMICalculatorModalOpen"
+      @closeModal="closeBMIcalculatorModal"
+    />
   </div>
 </template>
 <script>
@@ -195,6 +200,7 @@
 import axios from "axios";
 import EditProfileModal from "@/modals/editProfileModal.vue";
 import RecommendedModal from "@/modals/recommendedModal.vue";
+import BMICalculatorModal from "@/modals/BMICalculateModal.vue";
 
 export default {
   name: "ProfileUser",
@@ -202,6 +208,7 @@ export default {
     // NavBar,
     EditProfileModal,
     RecommendedModal,
+    BMICalculatorModal,
   },
   data() {
     return {
@@ -210,6 +217,7 @@ export default {
       modalOpen: false,
       recommendedModalOpen: false,
       diaries: [],
+      BMICalculatorModalOpen: false,
     };
   },
   created() {
@@ -253,6 +261,13 @@ export default {
     closeRecommendedModal() {
       this.recommendedModalOpen = false;
     },
+    openBMIcalculatorModal() {
+      this.BMICalculatorModalOpen = true;
+    },
+    closeBMIcalculatorModal() {
+      this.BMICalculatorModalOpen = false;
+    },
+
     async getUserDiary() {
       try {
         const token = localStorage.getItem("token");
