@@ -9,45 +9,21 @@
             </span>
             <div class="modal-inner">
                 <h1 :style="{ color: '#d29433', 'text-align': 'center' }">
-                    Edit Profile
+                    Upload new profile picture
                 </h1>
                 <div class="input-signup">
-                    <h3 class="naziv">First Name</h3>
                     <input
-                        type="text"
-                        v-model="firstName"
-                        class="input-field"
-                        required
+                        type="file"
+                        @change="handleImageUpload"
+                        class="form-control"
+                        accept="image/*"
                     />
-                    <h3 class="naziv">Last Name</h3>
-                    <input
-                        type="text"
-                        v-model="lastName"
-                        class="input-field"
-                        required
-                    />
-
-                    <h3 class="naziv">Old Password</h3>
-                    <input
-                        type="password"
-                        v-model="oldPassword"
-                        class="input-field"
-                        required
-                    />
-                    <h3 class="naziv">New Password</h3>
-                    <input
-                        type="password"
-                        v-model="newPassword"
-                        class="input-field"
-                        required
-                    />
-
                     <div class="submit">
                         <button
                             type="button"
                             class="btn btn-success"
                             :style="btnStyleGreen"
-                            @click="changePassword"
+                            @click="uploadImage"
                         >
                             Save Changes
                         </button>
@@ -59,10 +35,11 @@
 </template>
 
 <script>
+import firebase from "firebase/compat/app";
+import eventBus from "@/eventBus";
 import axios from "axios";
-
 export default {
-    name: "EditProfileModal",
+    name: "EditProfilePictureModal",
     props: {
         activeModal: {
             type: Boolean,
@@ -71,10 +48,7 @@ export default {
     },
     data() {
         return {
-            firstName: "",
-            lastName: "",
-            oldPassword: "",
-            newPassword: "",
+            file: null,
             btnStyleGreen: {
                 borderRadius: "20px",
                 width: "300px",
@@ -84,25 +58,52 @@ export default {
         };
     },
     methods: {
-        async changePassword() {
-            try {
-                const token = localStorage.getItem("token");
-                const formData = {
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    old_password: this.oldPassword,
-                    new_password: this.newPassword,
-                };
-                await axios.patch(`http://localhost:3000/user`, formData, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                });
-                this.$emit("closeModal");
-            } catch (error) {
-                console.error(error.response);
+        handleImageUpload(event) {
+            this.file = event.target.files[0];
+        },
+        uploadImage() {
+            if (this.file) {
+                this.uploadToStorage();
+            } else {
+                console.error("No file selected");
             }
+        },
+
+        uploadToStorage() {
+            const storageRef = firebase.storage().ref();
+            const imageRef = storageRef.child(
+                "profileImages/" + this.file.name
+            );
+
+            imageRef
+                .put(this.file)
+                .then((snapshot) => {
+                    // Upload completed successfully
+                    snapshot.ref.getDownloadURL().then((imageUrl) => {
+                        console.log("Image URL:", imageUrl);
+                        // Save the image path to the user database
+                        this.saveImagePathToUserDB(imageUrl);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error during upload:", error);
+                });
+        },
+        async saveImagePathToUserDB(imagePath) {
+            const token = localStorage.getItem("token");
+            const email = localStorage.getItem("userEmail");
+            const formData = {
+                email: email,
+                imagePath: imagePath,
+            };
+            await axios.patch(`http://localhost:3000/user`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            eventBus.emit("newUserData");
+            this.$emit("closeModal");
         },
         closeModal() {
             this.$emit("closeModal");
@@ -113,7 +114,6 @@ export default {
 
 <style scoped>
 @import "../stylesheet.css";
-
 .modal-outer {
     position: fixed;
     top: 5%;

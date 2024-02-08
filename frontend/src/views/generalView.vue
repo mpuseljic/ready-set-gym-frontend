@@ -18,7 +18,6 @@
                 </span>
             </div>
         </nav>
-
         <div class="carousel-inner">
             <div :class="{ 'carousel-item': true, active: activeSlide === 0 }">
                 <home-page />
@@ -34,6 +33,21 @@
             </div>
         </div>
     </div>
+
+    <div
+        v-if="showToast"
+        class="toast-container position-fixed bottom-0 start-50 translate-middle-x"
+    >
+        <div
+            id="toast"
+            class="custom-toast"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <div class="toast-body">Profil uspješno uređen!</div>
+        </div>
+    </div>
 </template>
 <script>
 /* eslint-disable */
@@ -41,6 +55,7 @@ import HomePage from "@/components/HomePage.vue";
 import Profile from "@/components/Profile.vue";
 import Diary from "@/components/Diary.vue";
 import calculateBmiComponent from "@/components/CalculateBMI.vue";
+import eventBus from "@/eventBus";
 
 export default {
     name: "generalView",
@@ -53,6 +68,7 @@ export default {
                 { name: "description" },
                 { name: "person" },
             ],
+            showToast: false,
         };
     },
     components: {
@@ -61,7 +77,28 @@ export default {
         Diary,
         calculateBmiComponent,
     },
+    created() {
+        eventBus.on("newUserData", () => {
+            console.log("event main");
+            this.showToastSuccess();
+            this.showToast = true;
+            setTimeout(() => {
+                this.showToast = false;
+            }, 3000);
+        });
+    },
     methods: {
+        showToastSuccess() {
+            const toastSuccess = document.getElementById("toastSuccess");
+            if (toastSuccess) {
+                const toastBootstrap = new bootstrap.Toast(toastSuccess, {
+                    autohide: true,
+                    delay: 3000,
+                });
+
+                toastBootstrap.show();
+            }
+        },
         changeSlide(index) {
             this.activeSlide = index;
         },
@@ -69,6 +106,13 @@ export default {
 };
 </script>
 <style>
+.custom-toast {
+    background-color: orange;
+    color: black;
+    width: 450px;
+    text-align: center;
+    margin-bottom: 6vh;
+}
 .navbar {
     height: 5.5vh;
 }
