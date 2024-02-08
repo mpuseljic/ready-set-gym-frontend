@@ -93,17 +93,6 @@ export default {
           this.password
         );
         console.log(res);
-        // const response = await axios.post(
-        //     "http://localhost:3000/auth",
-        //     {
-        //         email: this.email,
-        //         password: this.password,
-        //     }
-        // );
-
-        // const token = response.data.token;
-
-        // localStorage.setItem("token", token);
 
         this.$router.push("/home");
       } catch (error) {

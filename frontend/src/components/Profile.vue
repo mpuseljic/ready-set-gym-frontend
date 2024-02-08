@@ -72,102 +72,6 @@
       </v-carousel>
     </v-container>
 
-    <!-- <div id="carouselExampleCaptionsProfile" class="carousel">
-            <div class="carousel-indicators">
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptionsProfile"
-                    data-bs-slide-to="0"
-                    class="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                ></button>
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptionsProfile"
-                    data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                ></button>
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptionsProfile"
-                    data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                ></button>
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptionsProfile"
-                    data-bs-slide-to="3"
-                    aria-label="Slide 4"
-                ></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img
-                        src="../assets/profile-one.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>RECOMMENDED WORKOUTS</h3>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../assets/profile-second.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>MY WORKOUTS</h3>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../assets/food.avif"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>FOOD</h3>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../assets/bmi.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>CALCULATE BMI</h3>
-                    </div>
-                </div>
-            </div>
-            <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleCaptionsProfile"
-                data-bs-slide="prev"
-            >
-                <span
-                    class="carousel-control-prev-icon"
-                    aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExampleCaptionsProfile"
-                data-bs-slide="next"
-            >
-                <span
-                    class="carousel-control-next-icon"
-                    aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div> -->
     <div class="my-diaries">
       <h2 class="my-diaries-text">Read my diaries</h2>
     </div>
@@ -182,7 +86,6 @@
         </div>
       </div>
     </div>
-    <!-- <nav-bar class="navbar" /> -->
     <RecommendedModal
       :activeModal="recommendedModalOpen"
       @closeModal="closeRecommendedModal"
@@ -196,7 +99,7 @@
 </template>
 <script>
 /* eslint-disable */
-// import NavBar from "@/components/NavBar.vue";
+
 import axios from "axios";
 import EditProfileModal from "@/modals/editProfileModal.vue";
 import RecommendedModal from "@/modals/recommendedModal.vue";
@@ -205,7 +108,6 @@ import BMICalculatorModal from "@/modals/BMICalculateModal.vue";
 export default {
   name: "ProfileUser",
   components: {
-    // NavBar,
     EditProfileModal,
     RecommendedModal,
     BMICalculatorModal,

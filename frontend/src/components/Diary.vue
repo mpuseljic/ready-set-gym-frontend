@@ -128,7 +128,7 @@ export default {
     },
     async saveEntry() {
       try {
-        const token = localStorage.getItem("token"); // Zamijenite ovo s vašim stvarnim autentikacijskim tokenom
+        const token = localStorage.getItem("token");
         const response = await axios.post(
           "http://localhost:3000/diary/record",
           {
@@ -141,7 +141,7 @@ export default {
             },
           }
         );
-        console.log(response.data.message); // Možete ispisati poruku o uspjehu
+        console.log(response.data.message);
         this.clearForm();
       } catch (error) {
         console.error("Error saving diary entry:", error);
