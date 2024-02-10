@@ -26,9 +26,12 @@
                 <calculate-bmi-component />
             </div>
             <div :class="{ 'carousel-item': true, active: activeSlide === 2 }">
-                <diary />
+                <recipes-component />
             </div>
             <div :class="{ 'carousel-item': true, active: activeSlide === 3 }">
+                <diary />
+            </div>
+            <div :class="{ 'carousel-item': true, active: activeSlide === 4 }">
                 <profile />
             </div>
         </div>
@@ -45,7 +48,7 @@
             aria-live="assertive"
             aria-atomic="true"
         >
-            <div class="toast-body">Profil uspješno uređen!</div>
+            <div class="toast-body">{{ successMessage }}</div>
         </div>
     </div>
 </template>
@@ -55,16 +58,19 @@ import HomePage from "@/components/HomePage.vue";
 import Profile from "@/components/Profile.vue";
 import Diary from "@/components/Diary.vue";
 import calculateBmiComponent from "@/components/CalculateBMI.vue";
+import recipesComponent from "@/components/recipesComponent.vue";
 import eventBus from "@/eventBus";
 
 export default {
     name: "generalView",
     data() {
         return {
+            successMessage: "",
             activeSlide: 0,
             carouselItems: [
                 { name: "home" },
                 { name: "insert_chart" },
+                { name: "restaurant" },
                 { name: "description" },
                 { name: "person" },
             ],
@@ -76,10 +82,12 @@ export default {
         Profile,
         Diary,
         calculateBmiComponent,
+        recipesComponent,
     },
     created() {
-        eventBus.on("newUserData", () => {
-            console.log("event main");
+        eventBus.on("success", (data) => {
+            console.log("event main", data);
+            this.successMessage = data;
             this.showToastSuccess();
             this.showToast = true;
             setTimeout(() => {
@@ -93,7 +101,7 @@ export default {
             if (toastSuccess) {
                 const toastBootstrap = new bootstrap.Toast(toastSuccess, {
                     autohide: true,
-                    delay: 3000,
+                    delay: 5000,
                 });
 
                 toastBootstrap.show();
@@ -112,6 +120,10 @@ export default {
     width: 450px;
     text-align: center;
     margin-bottom: 6vh;
+    height: 70px;
+}
+.toast-body {
+    font-size: 1.2rem;
 }
 .navbar {
     height: 5.5vh;

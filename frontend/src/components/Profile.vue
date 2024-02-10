@@ -14,7 +14,7 @@
         class="main"
         :style="{
             'background-color': 'black',
-            height: '200%',
+            height: '100%',
         }"
     >
         <div class="my-profile">
@@ -25,22 +25,17 @@
             <span
                 class="material-symbols-outlined profile-pic"
                 :style="{ backgroundImage: 'url(' + userImage + ')' }"
-                @click="openModalImage"
+                @click="openModal(), openModalEvent('edit-profile-picture')"
             >
             </span>
-            <h2 style="margin-top: 20px" @click="openModal">
+            <h2
+                style="margin-top: 20px"
+                @click="openModal(), openModalEvent('edit-profile-data')"
+            >
                 {{ userFullName }}
             </h2>
         </div>
-        <EditProfileModal
-            :activeModal="modalOpenEditUser"
-            @closeModal="closeModal"
-        />
-        <EditProfilePictureModal
-            :active-modal="modalOpenEditPicture"
-            @closeModal="closeModal"
-        />
-        <div class="my-workout">
+        <!-- <div class="my-workout">
             <h3 style="color: white">Choose what you want</h3>
         </div>
         <v-container>
@@ -88,7 +83,7 @@
                     </div>
                 </v-carousel-item>
             </v-carousel>
-        </v-container>
+        </v-container> -->
 
         <div class="my-diaries">
             <h2 class="my-diaries-text">Read my diaries</h2>
@@ -117,28 +112,26 @@
             :activeModal="BMICalculatorModalOpen"
             @closeModal="closeBMIcalculatorModal"
         />
+        <mainModal :active-modal="activeModal" />
     </div>
 </template>
 <script>
 /* eslint-disable */
 
 import axios from "axios";
-import EditProfileModal from "@/modals/editProfileModal.vue";
-import EditProfilePictureModal from "@/modals/editProfilePictureModal.vue";
 import RecommendedModal from "@/modals/recommendedModal.vue";
-import BMICalculatorModal from "@/modals/BMICalculateModal.vue";
 import eventBus from "@/eventBus";
+import mainModal from "@/views/modalBody.vue";
 
 export default {
     name: "ProfileUser",
     components: {
-        EditProfileModal,
         RecommendedModal,
-        BMICalculatorModal,
-        EditProfilePictureModal,
+        mainModal,
     },
     data() {
         return {
+            activeModal: false,
             userFullName: "",
             modalOpenEditUser: false,
             modalOpenEditPicture: false,
@@ -149,6 +142,9 @@ export default {
         };
     },
     created() {
+        eventBus.on("closeModal", (data) => {
+            if (data.closeModal) this.activeModal = false;
+        });
         this.getUserProfile();
         this.getUserDiary();
         this.fetchNewUserData();
@@ -177,16 +173,19 @@ export default {
             this.$router.push({ name: "login" });
         },
         fetchNewUserData() {
-            eventBus.on("newUserData", async () => {
+            eventBus.on("success", async () => {
                 console.log("new data event");
                 await this.getUserProfile();
             });
         },
-        editProfile() {
-            this.$router.push({ name: "EditProfile" });
-        },
         openModal() {
-            this.modalOpenEditUser = true;
+            this.activeModal = !this.activeModal;
+        },
+        openModalEvent(modalType) {
+            const data = {
+                modalType: modalType,
+            };
+            eventBus.emit("openModal", data);
         },
         openModalImage() {
             this.modalOpenEditPicture = true;

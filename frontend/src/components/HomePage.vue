@@ -15,116 +15,18 @@
             <h1 style="color: #d29433">Let's crush it!</h1>
         </div>
 
-        <!--search-->
         <div class="container mt-3">
             <input
                 class="form-control"
-                placeholder="Search anything..."
+                placeholder="Search exercises"
                 style="background-color: #9a9494; color: black"
                 v-model="searchText"
             />
         </div>
-        <!--recommended workouts-->
-        <div class="recommended-workout">
+        <div class="recommended-workout" v-if="searchText === ''">
             <h1 style="color: white">RECOMMENDED WORKOUTS</h1>
         </div>
-        <!-- <div id="carouselExampleCaptions" class="carousel">
-            <div class="carousel-indicators">
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide-to="0"
-                    class="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                ></button>
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                ></button>
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                ></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img
-                        src="../assets/crossfit.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>CrossFit</h3>
-                        <p>
-                            Whether you’ve trained your whole life or are just
-                            starting your fitness journey, CrossFit offers a
-                            results-based, community-driven approach that helps
-                            you build fitness and improve your health—over your
-                            lifetime.
-                        </p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../assets/lower-body.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Lower Body Attack</h3>
-                        <p>
-                            Use these timeless leg exercises to gain mass and
-                            strength on your lower body. A varied combination of
-                            reps and sets will help to keep your routine fresh.
-                        </p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../assets/upper-body.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Upper Body Attack</h3>
-                        <p>
-                            Time to get the arms, shoulders and chest into it!
-                            You will need some dumbbells to get this one done.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleCaptions"
-                data-bs-slide="prev"
-            >
-                <span
-                    class="carousel-control-prev-icon"
-                    aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExampleCaptions"
-                data-bs-slide="next"
-            >
-                <span
-                    class="carousel-control-next-icon"
-                    aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div> -->
-        <v-container>
+        <v-container v-if="searchText === ''">
             <v-carousel hide-delimiters>
                 <template v-slot:prev="{ props }">
                     <v-btn @click="props.onClick" icon>
@@ -182,12 +84,21 @@
                 </v-carousel-item>
             </v-carousel>
         </v-container>
-
-        <!--my workouts-->
-        <div class="my-workout">
-            <h1 style="color: white">MY WORKOUTS</h1>
+        <div class="my-workout" v-if="searchText === ''">
+            <span style="color: white; font-size: 2.5rem; font-weight: 500"
+                >MY WORKOUTS</span
+            >
+            &nbsp;&nbsp;&nbsp;
+            <span
+                class="material-symbols-outlined"
+                style="scale: 1.6"
+                type="button"
+                @click="openModal(), openModalEvent('add-new-workout-plan')"
+            >
+                add_box
+            </span>
         </div>
-        <v-container>
+        <v-container v-if="searchText === '' && userWorkouts.length !== 0">
             <v-carousel hide-delimiters>
                 <template v-slot:prev="{ props }">
                     <v-btn @click="props.onClick" icon>
@@ -199,109 +110,19 @@
                         <v-icon>mdi-chevron-right</v-icon>
                     </v-btn>
                 </template>
-                <v-carousel-item cover>
-                    <img
-                        class="carousel-image"
-                        src="../assets/my-workout-first.jpg"
-                    />
-                </v-carousel-item>
-
-                <v-carousel-item cover>
-                    <img
-                        class="carousel-image"
-                        src="../assets/my-workout-second.jpg"
-                    />
-                </v-carousel-item>
-
-                <v-carousel-item cover>
-                    <img
-                        class="carousel-image"
-                        src="../assets/my-workout-third.jpg"
-                    />
+                <v-carousel-item
+                    cover
+                    v-for="plan in userWorkouts"
+                    :key="plan"
+                    @click="openWorkoutModal(plan._id)"
+                >
+                    <img class="carousel-image" :src="plan.titleImagePath" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>{{ plan.planName }}</h1>
+                    </div>
                 </v-carousel-item>
             </v-carousel>
         </v-container>
-        <!-- <div id="carouselExampleCaptionsMyWorkouts" class="carousel">
-            <div class="carousel-indicators">
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptionsMyWorkouts"
-                    data-bs-slide-to="0"
-                    class="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                ></button>
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptionsMyWorkouts"
-                    data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                ></button>
-                <button
-                    type="button"
-                    data-bs-target="#carouselExampleCaptionsMyWorkouts"
-                    data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                ></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img
-                        src="../assets/my-workout-first.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>MY WORKOUT FIRST</h3>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../assets/my-workout-second.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>MY WORKOUT SECOND</h3>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img
-                        src="../assets/my-workout-third.jpg"
-                        class="d-block"
-                        style="height: 60vh; width: auto"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>MY WORKOUT THIRD</h3>
-                    </div>
-                </div>
-            </div>
-            <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleCaptionsMyWorkouts"
-                data-bs-slide="prev"
-            >
-                <span
-                    class="carousel-control-prev-icon"
-                    aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExampleCaptionsMyWorkouts"
-                data-bs-slide="next"
-            >
-                <span
-                    class="carousel-control-next-icon"
-                    aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div> -->
-        <!--exercise list-->
         <div class="exercise-list">
             <h1 style="color: white">EXERCISE LIST</h1>
             <div
@@ -320,40 +141,49 @@
             </div>
         </div>
 
-        <!-- <nav-bar class="navbar" /> -->
-        <exercise-modal-body
-            :active-modal="activeModal"
-            :workoutData="activeWorkoutData"
-        />
-        <div class="modal-overlay" v-if="activeModal" @click="closeModal"></div>
+        <!-- <exercise-modal-body :active-modal="activeModal" />
+        <workoutPlanModal :active-modal="activeWorkoutPlanModal" /> -->
+        <mainModal :active-modal="activeModal" />
+        <!-- <div class="modal-overlay" v-if="activeModal" @click="closeModal"></div> -->
     </div>
 </template>
 <script>
 /* eslint-disable */
 import eventBus from "@/eventBus";
-import exerciseModalBody from "@/modals/exerciseModalBody.vue";
-import firebase from "firebase/compat/app";
-// import NavBar from "@/components/NavBar.vue";
+// import exerciseModalBody from "@/modals/exerciseModalBody.vue";
+// import workoutPlanModal from "@/modals/workoutPlanModal.vue";
+import mainModal from "@/views/modalBody.vue";
+
 import axios from "axios";
 export default {
     name: "HomePage",
     data() {
         return {
+            activeNewPlanModal: false,
             activeModal: false,
             clickedInsideModal: false,
             exerciseList: [],
             searchText: "",
             activeWorkoutData: null,
             imageUrl: null,
+            addNewPlanModal: false,
+            userWorkouts: [],
+            activeWorkoutPlanModal: false,
+            activeWorkoutPlan: [],
         };
     },
     components: {
-        // NavBar,
-        exerciseModalBody,
+        // exerciseModalBody,
+        // workoutPlanModal,
+        mainModal,
     },
-    created() {
+    async created() {
+        console.log(this.userWorkouts);
         eventBus.on("closeModal", (closeModalData) => {
-            if (closeModalData.closeModal) this.activeModal = false;
+            if (closeModalData.closeModal) {
+                this.activeModal = false;
+                this.activeNewPlanModal = false;
+            }
         });
         eventBus.on("openModal", (modalData) => {
             if (
@@ -364,31 +194,37 @@ export default {
                 this.activeModal = true;
             }
         });
+        eventBus.on("newUserWorkoutPlan", async () => {
+            await this.fetchUserWorkouts();
+        });
         this.fetchExerciseList();
-    },
-    mounted() {
-        const storageRef = firebase.storage().ref();
-        const imageUrl = storageRef
-            .child(
-                "/workoutImages/" + "3z8vczjruYQvVoLMDkBeHcIJ57D2_1685213566477"
-            )
-            .getDownloadURL()
-            .then((url) => {
-                console.log("Image URL:", url);
-                this.imageUrl = url;
-                // Use the URL in your Vue component
-            })
-            .catch((error) => {
-                // Handle errors
-            });
+        await this.fetchUserWorkouts();
     },
     methods: {
         eventBusTest() {
             let id = 4;
             eventBus.emit("test", id);
         },
+        openModalEvent(modalType) {
+            const data = {
+                modalType: modalType,
+            };
+            eventBus.emit("openModal", data);
+        },
         toggleModal() {
             this.activeModal = !this.activeModal;
+        },
+        async fetchUserWorkouts() {
+            const email = localStorage.getItem("userEmail");
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/workout-plan/${email}`
+                );
+                this.userWorkouts = response.data;
+                console.log(this.userWorkouts);
+            } catch (error) {
+                console.error("Error fetching user workout data:", error);
+            }
         },
         async openModal(workoutType) {
             this.clickedInsideModal = false;
@@ -406,10 +242,22 @@ export default {
                 );
             }
         },
-
+        openWorkoutModal(workoutId) {
+            this.activeWorkoutPlan = this.userWorkouts.filter((x) => {
+                return x._id === workoutId;
+            });
+            eventBus.emit("workoutPlanData", this.activeWorkoutPlan[0]);
+            this.activeWorkoutPlanModal = true;
+        },
         closeModal() {
             if (!this.clickedInsideModal) {
-                this.activeModal = false;
+                if (this.activeModal) {
+                    this.activeModal = false;
+                } else if (this.activeNewPlanModal) {
+                    this.activeNewPlanModal = false;
+                } else {
+                    this.activeWorkoutPlanModal = false;
+                }
             }
         },
 
@@ -489,15 +337,6 @@ export default {
 }
 .carousel-item {
     height: 60vh;
-}
-
-.navbar {
-    margin-bottom: 20px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 2;
 }
 
 .carousel-caption {

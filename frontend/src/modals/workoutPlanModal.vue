@@ -7,10 +7,10 @@
                 >close</span
             >
             <div class="modal-inner">
-                <div class="modal-content" v-if="workoutData">
+                <div class="modal-content" v-if="workout">
                     <div class="image-container">
                         <img
-                            :src="workoutData.image"
+                            :src="workout.titleImagePath"
                             alt="Workout Image"
                             style="
                                 width: 100%;
@@ -19,15 +19,15 @@
                             "
                         />
                     </div>
-                    <h1 style="color: #d29433">{{ workoutData.title }}</h1>
-                    <div v-if="workoutData.exercises">
+                    <h1 style="color: #d29433">{{ workout.planName }}</h1>
+                    <div v-if="workout.exercisesArray">
                         <div
-                            v-for="(exercise, index) in workoutData.exercises"
+                            v-for="(exercise, index) in workout.exercisesArray"
                             :key="index"
                             class="exercise-container"
                         >
                             <img :src="exercise.img_url" alt="Exercise Image" />
-                            <h2>{{ exercise.name }}</h2>
+                            <h2>{{ exercise.title }}</h2>
                         </div>
                     </div>
                 </div>
@@ -39,9 +39,9 @@
 import eventBus from "@/eventBus";
 
 export default {
-    name: "exerciseModalBody",
+    name: "workoutPlanModal",
     data() {
-        return {};
+        return { workout: null };
     },
     props: {
         activeModal: {
@@ -55,9 +55,9 @@ export default {
     },
     components: {},
     created() {
-        eventBus.on("test", (id) => {
-            console.log("ID", id);
-            console.log(this.activeModal);
+        eventBus.on("workoutPlanData", (data) => {
+            this.workout = data;
+            console.log(this.workout);
         });
     },
     methods: {
@@ -144,8 +144,4 @@ export default {
     text-align: center;
     margin: 0;
 }
-
-/* .image-container {
-  margin-top: 220%;
-} */
 </style>
