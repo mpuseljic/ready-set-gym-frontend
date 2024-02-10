@@ -69,7 +69,6 @@ export default {
     created() {
         document.addEventListener("keydown", this.press);
         eventBus.on("openModal", (data) => {
-            console.log("event OPEN");
             this.modalType = data.modalType;
             if (data.workoutPlan !== null) {
                 this.workoutPlan = data.workoutPlan;
@@ -108,6 +107,7 @@ export default {
     align-items: center;
     background-color: #1c1c1c;
     z-index: 9999;
+    opacity: 0.98;
 }
 
 .modal-inner {
