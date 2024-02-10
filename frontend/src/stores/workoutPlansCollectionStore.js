@@ -5,8 +5,18 @@ import axios from "axios";
 export const useWorkoutPlansCollectionStore = defineStore(
     "workoutPlansCollectionStore",
     {
-        state: () => ({}),
-        getters: {},
+        state: () => ({
+            userWorkouts: [],
+        }),
+        getters: {
+            getAllUserWorkouts: (state) => state.userWorkouts,
+            getUserWorkoutPlanData: (state) => (id) => {
+                const workoutPlanData = state.userWorkouts.filter((plan) => {
+                    return plan._id === id;
+                });
+                return workoutPlanData[0];
+            },
+        },
         actions: {
             async saveNewUserWorkoutPlan(formData) {
                 const token = localStorage.getItem("token");
@@ -21,6 +31,13 @@ export const useWorkoutPlansCollectionStore = defineStore(
                     }
                 );
                 return response;
+            },
+            async fetchUserWorkouts() {
+                const email = localStorage.getItem("userEmail");
+                const response = await axios.get(
+                    `${config.BACKEND_URL}/workout-plan/${email}`
+                );
+                this.userWorkouts = response.data;
             },
         },
     }

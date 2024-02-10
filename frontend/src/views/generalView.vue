@@ -20,19 +20,19 @@
         </nav>
         <div class="carousel-inner">
             <div :class="{ 'carousel-item': true, active: activeSlide === 0 }">
-                <home-page />
+                <homePageComponent />
             </div>
             <div :class="{ 'carousel-item': true, active: activeSlide === 1 }">
-                <calculate-bmi-component />
+                <calculateBMIComponent />
             </div>
             <div :class="{ 'carousel-item': true, active: activeSlide === 2 }">
-                <recipes-component />
+                <recipesComponent />
             </div>
             <div :class="{ 'carousel-item': true, active: activeSlide === 3 }">
-                <diary />
+                <diaryComponent />
             </div>
             <div :class="{ 'carousel-item': true, active: activeSlide === 4 }">
-                <profile />
+                <profileComponent />
             </div>
         </div>
     </div>
@@ -54,10 +54,10 @@
 </template>
 <script>
 /* eslint-disable */
-import HomePage from "@/components/HomePage.vue";
-import Profile from "@/components/Profile.vue";
-import Diary from "@/components/Diary.vue";
-import calculateBmiComponent from "@/components/CalculateBMI.vue";
+import homePageComponent from "@/components/homePageComponent.vue";
+import profileComponent from "@/components/profileComponent.vue";
+import diaryComponent from "@/components/diaryComponent.vue";
+import calculateBMIComponent from "@/components/calculateBMIComponent.vue";
 import recipesComponent from "@/components/recipesComponent.vue";
 import eventBus from "@/eventBus";
 
@@ -78,15 +78,14 @@ export default {
         };
     },
     components: {
-        HomePage,
-        Profile,
-        Diary,
-        calculateBmiComponent,
+        homePageComponent,
+        profileComponent,
+        diaryComponent,
+        calculateBMIComponent,
         recipesComponent,
     },
     created() {
         eventBus.on("success", (data) => {
-            console.log("event main", data);
             this.successMessage = data;
             this.showToastSuccess();
             this.showToast = true;

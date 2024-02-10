@@ -27,4 +27,11 @@ body {
 .exit-button-modal {
     z-index: 99;
 }
+.navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
 </style>

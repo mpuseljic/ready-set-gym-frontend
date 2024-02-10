@@ -4,13 +4,6 @@
             <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
         </div>
         <div class="main" style="background-color: black; margin: 0">
-            <div class="header" style="padding-left: 15px">
-                <router-link to="/" class="btn-dark" style="width: 50px">
-                    <span class="btn-dark material-symbols-outlined">
-                        arrow_back_ios
-                    </span>
-                </router-link>
-            </div>
             <div class="gender">
                 <h1 class="naslov">BMI CALCULATOR</h1>
                 <button
@@ -19,7 +12,9 @@
                     :style="maleBtnStyle"
                     size="lg"
                 >
-                    <i class="bi bi-gender-male" style="font-size: 2rem"></i>
+                    <span class="material-symbols-outlined gender-icon">
+                        male
+                    </span>
                 </button>
                 <button
                     @click="femaleChoose"
@@ -27,7 +22,9 @@
                     :style="femaleBtnStyle"
                     size="lg"
                 >
-                    <i class="bi bi-gender-female" style="font-size: 2rem"></i>
+                    <span class="material-symbols-outlined gender-icon">
+                        female
+                    </span>
                 </button>
             </div>
             <div class="bmi">
@@ -65,18 +62,13 @@
                 </div>
             </div>
         </div>
-        <!-- <nav-bar class="navbar" /> -->
     </div>
 </template>
 
 <script>
-// import NavBar from "./NavBar.vue";
-
 export default {
-    name: "calculateBmiComponent",
-    components: {
-        // NavBar,
-    },
+    name: "calculateBMIComponent",
+    components: {},
     data() {
         return {
             height: null,
@@ -146,8 +138,25 @@ export default {
 };
 </script>
 
-<style>
-@import "../stylesheet.css";
+<style scoped>
+.gender-icon {
+    scale: 1.9;
+}
+.heading-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    overflow: hidden;
+}
+.heading {
+    margin: 0;
+    padding: 1vw 5vw 0 2vw;
+    height: 7vh;
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .gender {
     text-align: center;
 }

@@ -55,8 +55,7 @@
 </template>
 
 <script>
-// import axios from "axios";
-import { useLoginStore } from "@/stores/loginStore";
+import { useUsersCollectionStore } from "@/stores/usersCollectionStore";
 
 export default {
     name: "LogIn",
@@ -78,23 +77,17 @@ export default {
         };
     },
     setup() {
-        const loginStore = useLoginStore();
-        return { loginStore };
+        const usersCollectionStore = useUsersCollectionStore();
+        return { usersCollectionStore };
     },
     methods: {
         async loginUser() {
             try {
                 this.loading = true;
-
-                console.log("Login Data:", {
-                    email: this.email,
-                    password: this.password,
-                });
-                const res = await this.loginStore.fetchUserData(
+                const res = await this.usersCollectionStore.fetchUserData(
                     this.email,
                     this.password
                 );
-                console.log(res);
                 if (res.status === 200) {
                     localStorage.setItem("userEmail", this.email);
                 }
@@ -114,8 +107,6 @@ export default {
 };
 </script>
 <style scoped>
-@import "../stylesheet.css";
-
 .input-login {
     margin-top: 30px;
     display: flex;
@@ -140,15 +131,25 @@ export default {
     margin-top: 30px;
 }
 
-/* .btn-dark {
-	background-color: black;
-	border: none;
-	margin: 20px 0 0 0 !important;
-	padding: 0 !important;
+.btn-dark {
+    background-color: black;
+    border: none;
+    margin: 20px 0 0 10px !important;
+    padding: 0 !important;
 }
+
 .btn-dark:hover {
-	background-color: black;
-} */
+    background-color: black;
+}
+.btn-dark:focus {
+    border: none;
+}
+.btn-dark:active {
+    border: none;
+}
+.btn-dark::-moz-focus-inner {
+    border: 0;
+}
 .header {
     margin: 0;
 }

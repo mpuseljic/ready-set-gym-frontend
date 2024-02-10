@@ -2,29 +2,19 @@
     <div class="heading">
         <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
     </div>
-    <div
-        class="main"
-        :style="{
-            'background-color': 'black',
-            height: '200%',
-        }"
-    >
-        <div class="header" style="padding-left: 15px"></div>
-
+    <div class="main">
         <div class="header">
-            <h1 style="color: #d29433">Let's crush it!</h1>
+            <h1>Let's crush it!</h1>
         </div>
-
         <div class="container mt-3">
             <input
-                class="form-control"
+                class="form-control search-bar"
                 placeholder="Search exercises"
-                style="background-color: #9a9494; color: black"
                 v-model="searchText"
             />
         </div>
         <div class="recommended-workout" v-if="searchText === ''">
-            <h1 style="color: white">RECOMMENDED WORKOUTS</h1>
+            <h1>RECOMMENDED WORKOUTS</h1>
         </div>
         <v-container v-if="searchText === ''">
             <v-carousel hide-delimiters>
@@ -38,7 +28,13 @@
                         <v-icon>mdi-chevron-right</v-icon>
                     </v-btn>
                 </template>
-                <v-carousel-item cover @click="openModal('crossFit')">
+                <v-carousel-item
+                    cover
+                    @click="
+                        openModalEvent('recommended-workout-plan', 'crossFit'),
+                            openModal()
+                    "
+                >
                     <img class="carousel-image" src="../assets/crossfit.jpg" />
                     <div class="carousel-caption d-none d-md-block">
                         <h1>CROSSFIT</h1>
@@ -53,7 +49,13 @@
                     </div>
                 </v-carousel-item>
 
-                <v-carousel-item cover @click="openModal('lowerBody')">
+                <v-carousel-item
+                    cover
+                    @click="
+                        openModalEvent('recommended-workout-plan', 'lowerBody'),
+                            openModal()
+                    "
+                >
                     <img
                         class="carousel-image"
                         src="../assets/lower-body.jpg"
@@ -68,7 +70,13 @@
                     </div>
                 </v-carousel-item>
 
-                <v-carousel-item cover @click="openModal('upperBody')">
+                <v-carousel-item
+                    cover
+                    @click="
+                        openModalEvent('recommended-workout-plan', 'upperBody'),
+                            openModal()
+                    "
+                >
                     <img
                         class="carousel-image"
                         src="../assets/upper-body.jpg"
@@ -85,13 +93,10 @@
             </v-carousel>
         </v-container>
         <div class="my-workout" v-if="searchText === ''">
-            <span style="color: white; font-size: 2.5rem; font-weight: 500"
-                >MY WORKOUTS</span
-            >
+            <span class="my-workouts-span">MY WORKOUTS</span>
             &nbsp;&nbsp;&nbsp;
             <span
-                class="material-symbols-outlined"
-                style="scale: 1.6"
+                class="material-symbols-outlined add-new-button"
                 type="button"
                 @click="openModal(), openModalEvent('add-new-workout-plan')"
             >
@@ -114,7 +119,10 @@
                     cover
                     v-for="plan in userWorkouts"
                     :key="plan"
-                    @click="openWorkoutModal(plan._id)"
+                    @click="
+                        openModalEvent('user-workout-plan', plan._id),
+                            openModal()
+                    "
                 >
                     <img class="carousel-image" :src="plan.titleImagePath" />
                     <div class="carousel-caption d-none d-md-block">
@@ -124,7 +132,7 @@
             </v-carousel>
         </v-container>
         <div class="exercise-list">
-            <h1 style="color: white">EXERCISE LIST</h1>
+            <h1>EXERCISE LIST</h1>
             <div
                 class="exercise-card"
                 v-for="exercise in filterExercises()"
@@ -140,138 +148,69 @@
                 </div>
             </div>
         </div>
-
-        <!-- <exercise-modal-body :active-modal="activeModal" />
-        <workoutPlanModal :active-modal="activeWorkoutPlanModal" /> -->
         <mainModal :active-modal="activeModal" />
-        <!-- <div class="modal-overlay" v-if="activeModal" @click="closeModal"></div> -->
     </div>
 </template>
 <script>
-/* eslint-disable */
 import eventBus from "@/eventBus";
-// import exerciseModalBody from "@/modals/exerciseModalBody.vue";
-// import workoutPlanModal from "@/modals/workoutPlanModal.vue";
 import mainModal from "@/views/modalBody.vue";
+import { useWorkoutPlansCollectionStore } from "@/stores/workoutPlansCollectionStore";
+import { useExerciseLiseCollectionStore } from "@/stores/exerciseListCollectionStore";
 
-import axios from "axios";
 export default {
-    name: "HomePage",
+    name: "homePageComponent",
     data() {
         return {
-            activeNewPlanModal: false,
             activeModal: false,
-            clickedInsideModal: false,
             exerciseList: [],
             searchText: "",
-            activeWorkoutData: null,
-            imageUrl: null,
-            addNewPlanModal: false,
             userWorkouts: [],
-            activeWorkoutPlanModal: false,
-            activeWorkoutPlan: [],
         };
     },
     components: {
-        // exerciseModalBody,
-        // workoutPlanModal,
         mainModal,
     },
+    setup() {
+        const workoutPlansCollectionStore = useWorkoutPlansCollectionStore();
+        const exerciseListCollectionStore = useExerciseLiseCollectionStore();
+        return { workoutPlansCollectionStore, exerciseListCollectionStore };
+    },
     async created() {
-        console.log(this.userWorkouts);
+        await this.workoutPlansCollectionStore.fetchUserWorkouts();
+        this.fetchExerciseList();
+        this.fetchUserWorkouts();
+        this.fetchNewUserWorkouts();
         eventBus.on("closeModal", (closeModalData) => {
             if (closeModalData.closeModal) {
                 this.activeModal = false;
-                this.activeNewPlanModal = false;
             }
         });
-        eventBus.on("openModal", (modalData) => {
-            if (
-                modalData.workoutName === "CROSSFIT" ||
-                modalData.workoutName === "LOWER-BODY" ||
-                modalData.workoutName === "UPPER-BODY"
-            ) {
-                this.activeModal = true;
-            }
-        });
-        eventBus.on("newUserWorkoutPlan", async () => {
-            await this.fetchUserWorkouts();
-        });
-        this.fetchExerciseList();
-        await this.fetchUserWorkouts();
     },
     methods: {
-        eventBusTest() {
-            let id = 4;
-            eventBus.emit("test", id);
-        },
-        openModalEvent(modalType) {
+        openModalEvent(modalType, workoutPlan = null) {
             const data = {
                 modalType: modalType,
+                workoutPlan: workoutPlan,
             };
             eventBus.emit("openModal", data);
         },
-        toggleModal() {
+        openModal() {
             this.activeModal = !this.activeModal;
         },
-        async fetchUserWorkouts() {
-            const email = localStorage.getItem("userEmail");
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/workout-plan/${email}`
-                );
-                this.userWorkouts = response.data;
-                console.log(this.userWorkouts);
-            } catch (error) {
-                console.error("Error fetching user workout data:", error);
-            }
+        fetchUserWorkouts() {
+            this.userWorkouts =
+                this.workoutPlansCollectionStore.getAllUserWorkouts;
         },
-        async openModal(workoutType) {
-            this.clickedInsideModal = false;
-            this.activeModal = true;
-
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/recommendedworkouts/${workoutType}`
-                );
-                this.activeWorkoutData = response.data;
-            } catch (error) {
-                console.error(
-                    "Error fetching recommended workout data:",
-                    error
-                );
-            }
-        },
-        openWorkoutModal(workoutId) {
-            this.activeWorkoutPlan = this.userWorkouts.filter((x) => {
-                return x._id === workoutId;
+        fetchNewUserWorkouts() {
+            eventBus.on("success", async () => {
+                await this.workoutPlansCollectionStore.fetchUserWorkouts();
+                this.fetchUserWorkouts();
             });
-            eventBus.emit("workoutPlanData", this.activeWorkoutPlan[0]);
-            this.activeWorkoutPlanModal = true;
         },
-        closeModal() {
-            if (!this.clickedInsideModal) {
-                if (this.activeModal) {
-                    this.activeModal = false;
-                } else if (this.activeNewPlanModal) {
-                    this.activeNewPlanModal = false;
-                } else {
-                    this.activeWorkoutPlanModal = false;
-                }
-            }
-        },
-
         async fetchExerciseList() {
-            try {
-                const response = await axios.get(
-                    "http://localhost:3000/exercises"
-                );
-                this.exerciseList = response.data;
-            } catch (error) {
-                console.error("Error fetching exercise list:", error);
-            }
+            const res = await this.exerciseListCollectionStore.getExercises();
+            this.exerciseList = res.data;
         },
-
         filterExercises() {
             return this.exerciseList.filter((exercise) => {
                 return exercise.title
@@ -287,11 +226,22 @@ export default {
 .mdi-chevron-left {
     color: black;
 }
+.search-bar {
+    background-color: #9a9494;
+    color: black;
+    text-align: center;
+}
 .carousel-image {
     width: 100%;
     max-height: 100%;
     object-fit: contain;
     opacity: 0.7;
+}
+.heading-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    overflow: hidden;
 }
 .heading {
     margin: 0;
@@ -303,16 +253,10 @@ export default {
     align-items: center;
 }
 
-.heading-img {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-    overflow: hidden;
-}
-
 .header {
     padding-top: 5px;
     padding-left: 20px;
+    color: #d29433;
 }
 .container {
     display: flex;
@@ -323,34 +267,24 @@ export default {
 .form-control {
     border-radius: 50px;
 }
-
+.my-workouts-span {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+.add-new-button {
+    scale: 1.7;
+    color: #d29433;
+}
 .recommended-workout,
 .my-workout,
 .exercise-list {
     margin: 50px;
     margin-top: 70px;
+    color: white;
 }
-.carousel-inner {
-    height: 60vh;
-    display: grid;
-    place-content: center;
-}
-.carousel-item {
-    height: 60vh;
-}
-
 .carousel-caption {
     color: #d29433;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
 }
 
 .exercise-card {

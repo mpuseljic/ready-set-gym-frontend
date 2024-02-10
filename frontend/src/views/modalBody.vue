@@ -20,6 +20,14 @@
                     <addNewWorkoutPlanModalBody
                         v-if="modalType === 'add-new-workout-plan'"
                     />
+                    <recommendedWorkoutPlanModalBody
+                        :workoutPlan="workoutPlan"
+                        v-if="modalType === 'recommended-workout-plan'"
+                    />
+                    <userWorkoutPlanModalBody
+                        :workoutPlan="workoutPlan"
+                        v-if="modalType === 'user-workout-plan'"
+                    />
                 </div>
             </div>
         </div>
@@ -33,12 +41,15 @@ import eventBus from "@/eventBus";
 import editProfileDataModalBody from "@/components/modals/editProfileDataModalBody.vue";
 import editProfilePictureModalBody from "@/components/modals/editProfilePictureModalBody.vue";
 import addNewWorkoutPlanModalBody from "@/components/modals/addNewWorkoutPlanModalBody.vue";
+import recommendedWorkoutPlanModalBody from "@/components/modals/recommendedWorkoutPlanModalBody.vue";
+import userWorkoutPlanModalBody from "@/components/modals/userWorkoutPlanModalBody.vue";
 
 export default {
     name: "mainModal",
     data() {
         return {
             modalType: "",
+            workoutPlan: "",
         };
     },
     props: {
@@ -51,6 +62,8 @@ export default {
         editProfileDataModalBody,
         editProfilePictureModalBody,
         addNewWorkoutPlanModalBody,
+        recommendedWorkoutPlanModalBody,
+        userWorkoutPlanModalBody,
     },
     setup() {},
     created() {
@@ -58,9 +71,13 @@ export default {
         eventBus.on("openModal", (data) => {
             console.log("event OPEN");
             this.modalType = data.modalType;
+            if (data.workoutPlan !== null) {
+                this.workoutPlan = data.workoutPlan;
+            }
         });
         eventBus.on("closeModal", () => {
             this.modalType = "";
+            this.workoutData = "";
         });
     },
     methods: {

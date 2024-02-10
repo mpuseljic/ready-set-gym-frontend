@@ -36,12 +36,15 @@
 </template>
 
 <script>
-import axios from "axios";
-
+import { useUsersCollectionStore } from "@/stores/usersCollectionStore";
 export default {
     name: "SignUp",
     data() {
         return {
+            userName: "",
+            surname: "",
+            email: "",
+            password: "",
             btnStyleGreen: {
                 borderRadius: "20px",
                 width: "300px",
@@ -50,24 +53,20 @@ export default {
             },
         };
     },
-
+    setup() {
+        const usersCollectionStore = useUsersCollectionStore();
+        return { usersCollectionStore };
+    },
     methods: {
         async registerUser() {
-            try {
-                const response = await axios.post(
-                    "http://localhost:3000/users",
-                    {
-                        firstName: this.userName,
-                        lastName: this.surname,
-                        email: this.email,
-                        password: this.password,
-                    }
-                );
-                console.log(response.data);
-
-                this.$router.push("/home");
-            } catch (error) {
-                console.error(error.response.data);
+            const res = await this.usersCollectionStore.registerUser(
+                this.userName,
+                this.surname,
+                this.email,
+                this.password
+            );
+            if (res) {
+                this.$router.push("/login");
             }
         },
     },
@@ -75,12 +74,6 @@ export default {
 </script>
 
 <style scoped>
-@import "../stylesheet.css";
-.main {
-    background-color: black;
-    height: 100vh;
-}
-
 .naziv {
     color: white;
 }
@@ -109,5 +102,24 @@ export default {
     justify-content: center;
     align-items: center;
     margin-top: 30px;
+}
+.btn-dark {
+    background-color: black;
+    border: none;
+    margin: 20px 0 0 10px !important;
+    padding: 0 !important;
+}
+
+.btn-dark:hover {
+    background-color: black;
+}
+.btn-dark:focus {
+    border: none;
+}
+.btn-dark:active {
+    border: none;
+}
+.btn-dark::-moz-focus-inner {
+    border: 0;
 }
 </style>

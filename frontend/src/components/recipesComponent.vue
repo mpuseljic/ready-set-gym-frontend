@@ -3,7 +3,7 @@
         <div class="heading">
             <img class="heading-img" src="@/assets/logorsg.jpg" alt="" />
         </div>
-        <div class="main" style="background-color: black; margin: 0">
+        <div class="main">
             <div class="gender">
                 <h1 class="naslov">Get the finest recipes</h1>
             </div>
@@ -79,9 +79,6 @@
 import { useRecipesAPIStore } from "@/stores/recipesAPIStore";
 export default {
     name: "recipesComponent",
-    components: {
-        // NavBar,
-    },
     data() {
         return { recipe: null };
     },
@@ -105,15 +102,12 @@ export default {
         async fetchRecipe() {
             const res = await this.recipesAPI.fetchRecipeData();
             this.recipe = res[0];
-            console.log(this.recipe);
         },
     },
 };
 </script>
 
 <style scoped>
-@import "../stylesheet.css";
-
 .heading-img {
     height: 100%;
     width: auto;
@@ -178,5 +172,8 @@ a {
     font-style: italic;
     text-align: center;
     margin-top: 1vw;
+}
+.naslov {
+    text-align: center;
 }
 </style>
