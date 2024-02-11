@@ -1,6 +1,6 @@
 # ReadySetGym - dokumentacija projekta
 
-## Tim 
+## Tim 224
 
 - Profesor: doc. dr. sc. Nikola Tanković
 - Studenti:
