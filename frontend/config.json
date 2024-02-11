@@ -1,4 +1,4 @@
 {
-    "BACKEND_URL": "http://localhost:3000",
+    "BACKEND_URL": "https://ready-set-gym-backend.vercel.app/",
     "RECIPES_API_URL": "https://www.themealdb.com/api/json/v1/1/random.php"
 }
